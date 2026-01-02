@@ -1,5 +1,13 @@
 # Dive School Website – Case Study (v2)
 
+## About V1
+    ...For media we used google storage and I implemented token encryption and refresh handling but removed it from v2 to reduce system complexity.
+
+## Lessons from v1
+- Overloaded app.js with too many responsibilities
+- Mixed infrastructure auth with product logic
+- Learned importance of scoping before integrating third-party services
+
 ## Goal
 Rebuild the core booking flow of a dive school website with a clean backend-first architecture.
 
