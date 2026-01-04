@@ -1,42 +1,45 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
-import express from 'express';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import express from "express";
+import { get, query } from "../db/index.js";
 
 const router = express.Router();
-const clientDir = path.join(__dirname, '..', '..', 'client');
 
-// ===== PAGE ROUTES =====
+/**
+ * GET /api/pages/:slug
+ */
+router.get("/:slug", async (req, res, next) => {
+  try {
+    const { slug } = req.params;
 
-router.get('/hero_page', (req, res) => {
-  res.sendFile(path.join(clientDir, 'hero.html'));
-});
+    const page = await get(
+      "SELECT id, slug, title FROM pages WHERE slug = ?",
+      [slug]
+    );
 
-router.get('/about_page', (req, res) => {
-  res.sendFile(path.join(clientDir, 'about.html'));
-});
+    if (!page) {
+      return res.status(404).json({ error: "Page not found" });
+    }
 
-router.get('/current', (req, res) => {
-  res.sendFile(path.join(clientDir, 'current.html'));
-});
+    const sections = await query(
+      "SELECT id, key, order_index FROM sections WHERE page_id = ? ORDER BY order_index",
+      [page.id]
+    );
 
-router.get('/locs', (req, res) => {
-  res.sendFile(path.join(clientDir, 'locs.html'));
-});
+    for (const section of sections) {
+      section.blocks = await query(
+        `SELECT id, type, content, lang, order_index
+         FROM blocks
+         WHERE section_id = ?`,
+        [section.id]
+      );
+    }
 
-router.get('/orgs', (req, res) => {
-  res.sendFile(path.join(clientDir, 'orgs.html'));
-});
-
-router.get('/activities', (req, res) => {
-  res.sendFile(path.join(clientDir, 'activities.html'));
-});
-
-// Catch-all (SPA / fallback)
-router.get('*', (req, res) => {
-  res.sendFile(path.join(clientDir, 'index.html'));
+    res.json({
+      page,
+      sections,
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
 export default router;
