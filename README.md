@@ -9,7 +9,7 @@
 - Learned importance of scoping before integrating third-party services
 
 ## Goal
-Rebuild the core booking flow of a dive school website with a clean backend-first architecture.
+Rebuild for fundamental soundness with proper structure and full use of the tools implemented.
 
 ## In Scope
 - Database-driven site content (read-only)

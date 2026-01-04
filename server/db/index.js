@@ -1,17 +1,45 @@
-import db from "./pool.js";
+import Database from 'better-sqlite3';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-export const query = (sql, params = []) =>
-  new Promise((resolve, reject) => {
-    db.all(sql, params, (err, rows) => {
-      if (err) reject(err);
-      else resolve(rows);
-    });
-  });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-export const get = (sql, params = []) =>
-  new Promise((resolve, reject) => {
-    db.get(sql, params, (err, row) => {
-      if (err) reject(err);
-      else resolve(row);
-    });
-  });
+// db.sqlite is in /server
+const dbPath = path.join(__dirname, '../db.sqlite');
+
+const db = new Database(dbPath);
+
+export default db;
+
+export function getPageBySlug(slug) {
+  const page = db
+    .prepare('SELECT * FROM pages WHERE slug = ?')
+    .get(slug);
+
+  return page;
+}
+
+export function getSectionsByPageId(pageId) {
+  return db
+    .prepare('SELECT * FROM sections WHERE page_id = ? ORDER BY order_index')
+    .all(pageId);
+}
+
+export function getBlocksBySectionId(sectionId) {
+  return db
+    .prepare('SELECT * FROM content_blocks WHERE section_id = ? ORDER BY order_index')
+    .all(sectionId);
+}
+
+export function getAllSections() {
+  return db
+    .prepare('SELECT * FROM sections ORDER BY order_index')
+    .all();
+}
+
+export function getAllBlocks() {
+  return db
+    .prepare('SELECT * FROM content_blocks ORDER BY order_index')
+    .all();
+}

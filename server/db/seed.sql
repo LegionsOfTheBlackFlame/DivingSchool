@@ -5,13 +5,13 @@ DELETE FROM pages;
 -- Pages
 INSERT INTO pages (id, slug, title) VALUES
 (1, 'home', 'Home Page'),
-(2, 'about', 'About Us');
+(2, 'booking', 'Book Now!');
 
 -- Sections (Home)
 INSERT INTO sections (id, page_id, key, order_index) VALUES
 (1, 1, 'hero', 1),
-(2, 1, 'intro', 2),
-(3, 1, 'gallery', 3);
+(2, 1, 'content', 2),
+
 
 -- Sections (About)
 INSERT INTO sections (id, page_id, key, order_index) VALUES
@@ -21,8 +21,9 @@ INSERT INTO sections (id, page_id, key, order_index) VALUES
 
 -- Blocks (Home → Hero)
 INSERT INTO blocks (section_id, type, content, lang, order_index) VALUES
-(1, 'text', 'Discover the underwater world with us', 'en', 1),
-(1, 'image', '/images/hero.jpg', 'en', 2);
+(1, 'title', 'Welcome to Diving School', 'en', 1),
+(1, 'text', 'Discover the underwater world with us', 'en', 2),
+(1, 'image', 'https://www.deepbluedivecenter.com/wp-content/uploads/Woman-Scuba-Diving-.png', 'en', 3);
 
 -- Blocks (Home → Intro)
 INSERT INTO blocks (section_id, type, content, lang, order_index) VALUES

@@ -1,16 +1,17 @@
 import express from "express";
-import { query } from "../db/index.js";
+import {
+  getAllSections,
+  getAllBlocks
+} from "../db/index.js";
 
 const router = express.Router();
 
 /**
  * GET /api/content/sections
  */
-router.get("/sections", async (req, res, next) => {
+router.get("/sections", (req, res, next) => {
   try {
-    const sections = await query(
-      "SELECT * FROM sections , order_index"
-    );
+    const sections = getAllSections();
     res.json(sections);
   } catch (err) {
     next(err);
@@ -20,11 +21,9 @@ router.get("/sections", async (req, res, next) => {
 /**
  * GET /api/content/blocks
  */
-router.get("/blocks", async (req, res, next) => {
+router.get("/blocks", (req, res, next) => {
   try {
-    const blocks = await query(
-      "SELECT * FROM blocks , order_index"
-    );
+    const blocks = getAllBlocks();
     res.json(blocks);
   } catch (err) {
     next(err);
