@@ -21,6 +21,7 @@ export function getPageBySlug(slug) {
 }
 
 export function getSectionsByPageId(pageId) {
+ 
   return db
     .prepare('SELECT * FROM sections WHERE page_id = ? ORDER BY order_index')
     .all(pageId);
@@ -28,7 +29,7 @@ export function getSectionsByPageId(pageId) {
 
 export function getBlocksBySectionId(sectionId) {
   return db
-    .prepare('SELECT * FROM content_blocks WHERE section_id = ? ORDER BY order_index')
+    .prepare('SELECT * FROM blocks WHERE section_id = ? ORDER BY order_index')
     .all(sectionId);
 }
 

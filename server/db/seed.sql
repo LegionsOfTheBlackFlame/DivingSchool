@@ -10,7 +10,7 @@ INSERT INTO pages (id, slug, title) VALUES
 -- Sections (Home)
 INSERT INTO sections (id, page_id, key, order_index) VALUES
 (1, 1, 'hero', 1),
-(2, 1, 'content', 2),
+(2, 1, 'content', 2);
 
 
 -- Sections (About)

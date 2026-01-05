@@ -1,12 +1,13 @@
 
 import express from 'express';
 import dotenv from "dotenv";
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 import pagesRouter from "./routes/pages.routes.js";
 import contentRouter from "./routes/content.routes.js";
 import divesRouter from "./routes/dives.js";
 import bookingsRouter from "./routes/bookings.js";
-import path from 'path';
-import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,6 +20,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../client')));
 
+// Health check endpoint
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
 });
@@ -32,7 +34,7 @@ app.use("/api/content", contentRouter);
 app.use("/api/dives", divesRouter);
 app.use("/api/bookings", bookingsRouter);
 
-// Instead of app.get('*', ...)
+// Catch-all
 app.get(/\/(?!api).*/, (req, res) => {
   res.sendFile(path.join(__dirname, '../client/index.html'));
 });
