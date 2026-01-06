@@ -34,5 +34,16 @@ Rebuild for fundamental soundness with proper structure and full use of the tool
 - mysql2 driver
 - Local development database
 
+## Validation & Safety
+
+This project uses lightweight sanity checks instead of a full test runner
+during early development:
+
+- Database schema & seed validation
+- API contract validation
+- Client render schema validation
+
+See `/docs/sanity-checks.md` for details.
+
 ## Background
 This project is a rebuild of a previous full-stack implementation that suffered from scope creep and tight coupling.

@@ -1,4 +1,4 @@
-import { assertRenderablePage } from "../test/assertRenderablePage.js";
+import { assertRenderablePage } from "../sanity/assertRenderablePage.js";
 
 export function renderPageData(page) {
   // 🔒 Guard clause — sanity first
