@@ -1,14 +1,13 @@
+import { assertRenderablePage } from "../test/assertRenderablePage.js";
+
 export function renderPageData(page) {
-  if (!page || !Array.isArray(page.sections)) {
-    throw new Error('Invalid page structure');
-  }
+  // 🔒 Guard clause — sanity first
+  assertRenderablePage(page);
 
   const fragment = document.createDocumentFragment();
 
   page.sections.forEach(section => {
     const sectionEl = document.createElement('section');
-
-    if (!Array.isArray(section.blocks)) return;
 
     section.blocks.forEach(block => {
       if (block.type === 'text') {

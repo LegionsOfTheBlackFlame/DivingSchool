@@ -4,6 +4,7 @@
   "type": "module",
   "main": "app.js",
   "scripts": {
+    "check": "node scripts/sanity-db.js",
     "start": "node app.js",
     "dev": "node --watch app.js"
   },
