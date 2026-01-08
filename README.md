@@ -1,49 +1,183 @@
-# Dive School Website – Case Study (v2)
+# Dive School Website — Case Study (v2)
 
-## About V1
-    ...For media we used google storage and I implemented token encryption and refresh handling but removed it from v2 to reduce system complexity.
+## Background (v1)
 
-## Lessons from v1
-- Overloaded app.js with too many responsibilities
-- Mixed infrastructure auth with product logic
-- Learned importance of scoping before integrating third-party services
+**SeaLeonDiving (v1)** was a full-stack, plain JavaScript website built in 2024 for a real diving school.
 
-## Goal
-Rebuild for fundamental soundness with proper structure and full use of the tools implemented.
+The stack was intentionally minimal, chosen to reinforce fundamentals and allow experimentation without heavy abstractions. The project included:
 
-## In Scope
-- Database-driven site content (read-only)
-- Dive listings
-- Booking request flow
-- Admin booking overview (no auth)
+* Google Cloud Storage for media
+* Token-based authentication with refresh handling
+* Asynchronous media streaming
+* A Telegram-based admin panel
+* A booking system
+
+While functional, the project suffered from **scope creep**. Several ambitious features were partially implemented, and architectural quality was occasionally sacrificed to meet immediate needs.
+
+v1 ultimately succeeded as a learning exercise, but not as a long-term maintainable system.
+
+---
+
+## Lessons Learned from v1
+
+* `app.js` accumulated too many responsibilities
+* Infrastructure concerns (auth, storage) were mixed with product logic
+* Third-party services were integrated before the core domain was stable
+* Scoping discipline matters more than feature count
+
+---
+
+## Goal of v2
+
+Rebuild the system with **fundamental soundness** as the primary objective.
+
+This version prioritizes:
+
+* Clear separation of concerns
+* Explicit module boundaries
+* Predictable data flow
+* Contract-driven development
+
+Feature depth is intentionally limited to preserve architectural clarity.
+
+---
+
+## In Scope (v2)
+
+* Database-driven site content (read-only)
+* Dive listings
+* Booking request flow
+* Admin booking overview (no authentication)
+
+---
 
 ## Out of Scope (v2)
-- Telegram admin bot
-- Fine-grained CMS editing
-- Authentication
-- Payments
+
+* Telegram admin bot
+* Fine-grained CMS editing
+* Authentication & authorization
+* Payments
+* Media uploads
+
+These are planned extensions once the core system is stable.
+
+---
 
 ## Tech Stack
-- Node.js
-- Express
-- SQL 
-- React (frontend, later)
+
+### Backend
+
+* Node.js
+* Express
+* SQL
+* SQLite (local development)
+
+### Frontend
+
+* React (client-side rendering)
+
+---
 
 ## Database
-- MySQL
-- mysql2 driver
-- Local development database
+
+* Relational schema with explicit content structure
+* Seeded baseline data for deterministic behavior
+* Data access layer isolated from routing logic
+
+---
 
 ## Validation & Safety
 
-This project uses lightweight sanity checks instead of a full test runner
-during early development:
+Instead of a full test runner, this project currently relies on **lightweight sanity checks** to enforce correctness during early development:
 
-- Database schema & seed validation
-- API contract validation
-- Client render schema validation
+* Database schema & seed validation
+* API contract validation
+* Client render schema validation
+
+These checks fail loudly and early when assumptions are violated.
 
 See `/docs/sanity-checks.md` for details.
 
-## Background
-This project is a rebuild of a previous full-stack implementation that suffered from scope creep and tight coupling.
+---
+
+## Notes
+
+This project is intentionally **not** a CMS clone or a feature-complete product.
+
+It is a case study in:
+
+* building clean boundaries,
+* resisting premature abstraction,
+* and treating structure as a first-class concern.
+
+---
+
+How to Run Locally
+Prerequisites
+
+Node.js (v18+ recommended)
+
+npm
+
+No global dependencies required
+
+1. Clone the repository
+git clone <repo-url>
+cd diving-school
+
+2. Install dependencies
+
+Server
+
+cd server
+npm install
+
+
+Client
+
+cd ../client
+npm install
+
+3. Initialize the database
+
+From the server directory:
+
+node scripts/init-db.js
+
+
+This will:
+
+Create the local SQLite database
+
+Apply the schema
+
+Insert seed data required for the app to function
+
+4. Start the backend
+npm run dev
+
+
+The API will be available at:
+
+http://localhost:3000
+
+5. Start the frontend
+
+From the client directory:
+
+npm run dev
+
+
+The client will be available at:
+
+http://localhost:5173
+
+6. Verify the setup
+
+Optional sanity checks:
+
+node scripts/sanity-db.js
+node scripts/sanity-api.js
+
+
+If these pass, the system is correctly wired.

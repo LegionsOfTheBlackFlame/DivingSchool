@@ -1,13 +1,36 @@
 import { useEffect, useState } from 'react'
+import { fetchJson } from '../../lib/fetchJSON.js'
 
 export default function HomePage() {
   const [page, setPage] = useState(null)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/pages/home')
-      .then(res => res.json())
-      .then(setPage)
+    let cancelled = false
+
+    async function load() {
+      try {
+        const data = await fetchJson('/api/pages/home')
+        if (!cancelled) setPage(data)
+      } catch (err) {
+        if (!cancelled) setError(err)
+      }
+    }
+
+    load()
+
+    return () => {
+      cancelled = true
+    }
   }, [])
+
+  if (error) {
+    return (
+      <pre style={{ color: 'crimson' }}>
+        {error.message}
+      </pre>
+    )
+  }
 
   if (!page) return <p>Loading…</p>
 
@@ -19,9 +42,18 @@ export default function HomePage() {
             if (block.type === 'text') {
               return <p key={block.id}>{block.content}</p>
             }
+
             if (block.type === 'image') {
-              return <img key={block.id} src={block.content} />
+              return (
+                <img
+                  key={block.id}
+                  src={block.content}
+                  alt=""
+                  style={{ maxWidth: '100%', height: 'auto' }}
+                />
+              )
             }
+
             return null
           })}
         </section>
