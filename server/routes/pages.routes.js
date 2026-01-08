@@ -5,11 +5,14 @@ import {
   getBlocksBySectionId
 } from "../db/index.js";
 
-const router = express.Router();
+import cors from 'cors'
 
-/**
- * GET /api/pages/:slug
- */
+
+const router = express.Router();
+router.use(cors({
+  origin: 'http://localhost:5173'
+}))
+
 router.get("/:slug", (req, res, next) => {
   try {
     const { slug } = req.params;

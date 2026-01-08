@@ -3,8 +3,13 @@ import {
   getAllSections,
   getAllBlocks
 } from "../db/index.js";
+import cors from 'cors'
+
 
 const router = express.Router();
+router.use(cors({
+  origin: 'http://localhost:5173'
+}))
 
 /**
  * GET /api/content/sections
