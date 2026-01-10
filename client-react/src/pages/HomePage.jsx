@@ -39,6 +39,11 @@ export default function HomePage() {
       {page.sections.map(section => (
         <section key={section.id}>
           {section.blocks.map(block => {
+              if (block.type === 'title') {
+              console.log(block);
+              return <h2 key={block.id}>{block.content}</h2>
+              
+            }
             if (block.type === 'text') {
               return <p key={block.id}>{block.content}</p>
             }

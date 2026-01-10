@@ -1,0 +1,20 @@
+:root {
+  /* spacing (distance) */
+  --space-1: 0.25rem;  /* 4px */
+  --space-2: 0.5rem;   /* 8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-5: 1.5rem;   /* 24px */
+  --space-6: 2rem;     /* 32px */
+
+  /* sizing */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* layout */
+  --max-width: 1200px;
+
+  /* navbar */
+  --nav-height: 64px;
+}

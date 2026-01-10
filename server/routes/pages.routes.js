@@ -19,6 +19,7 @@ router.get("/:slug", (req, res, next) => {
 
     // 1. Page
     const page = getPageBySlug(slug);
+   
 
     if (!page) {
       return res.status(404).json({ error: "Page not found" });
