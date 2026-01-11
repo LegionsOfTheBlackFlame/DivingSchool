@@ -1,4 +1,5 @@
 :root {
+    --font-sans:  "Nunito Sans", sans-serif;;
   /* spacing (distance) */
   --space-1: 0.25rem;  /* 4px */
   --space-2: 0.5rem;   /* 8px */
@@ -17,4 +18,10 @@
 
   /* navbar */
   --nav-height: 64px;
+
+  --color-1: #C1D4D9;
+  --color-2: #025951;
+  --color-3: #D9965B;
+  --color-4: #BF500F;
+  --color-5: #F2E6DF;
 }

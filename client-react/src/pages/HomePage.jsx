@@ -34,35 +34,40 @@ export default function HomePage() {
 
   if (!page) return <p>Loading…</p>
 
-  return (
-    <>
-      {page.sections.map(section => (
-        <section key={section.id}>
-          {section.blocks.map(block => {
-              if (block.type === 'title') {
-              console.log(block);
-              return <h2 key={block.id}>{block.content}</h2>
-              
-            }
-            if (block.type === 'text') {
-              return <p key={block.id}>{block.content}</p>
-            }
+console.log('mapping');
 
-            if (block.type === 'image') {
-              return (
-                <img
-                  key={block.id}
-                  src={block.content}
-                  alt=""
-                  style={{ maxWidth: '100%', height: 'auto' }}
-                />
-              )
-            }
+return (
+  <>
+    {page.sections.map(section => {
+      const textBlocks = section.blocks.filter(
+        b => b.type === 'title' || b.type === 'text'
+      )
 
-            return null
-          })}
-        </section>
-      ))}
-    </>
-  )
-}
+      const imageBlocks = section.blocks.filter(
+        b => b.type === 'image'
+      )
+
+      console.log('textBlocks:', textBlocks)
+
+      return (
+  <section key={section.id} className="hero-section">
+    <div className="hero-cell hero-text">
+      <div className="text-group">
+        {textBlocks.map(block =>
+          block.type === 'title'
+            ? <h2 key={block.id}>{block.content}</h2>
+            : <p key={block.id}>{block.content}</p>
+        )}
+      </div>
+    </div>
+
+    {imageBlocks.map(block => (
+      <div key={block.id} className="hero-cell hero-media">
+        <img src={block.content} alt="" />
+      </div>
+    ))}
+  </section>
+)
+    })}
+  </>
+) }
