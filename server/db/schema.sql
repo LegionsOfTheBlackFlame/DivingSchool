@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS sections (
   page_id INTEGER NOT NULL,
   key TEXT NOT NULL,
   order_index INTEGER NOT NULL,
+  layout_id TEXT NOT NULL,
   FOREIGN KEY (page_id) REFERENCES pages(id) ON DELETE CASCADE
 );
 
