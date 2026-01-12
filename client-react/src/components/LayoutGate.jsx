@@ -1,16 +1,14 @@
 import HeroSection from './sections/HeroSection.jsx'
+import DefaultSection from './sections/default.jsx'
+import ContactSection from './sections/ContactSection.jsx'
+
+const layouts = {
+    sect_hero_split: HeroSection,
+    sect_contact: ContactSection,
+    default: DefaultSection,
+}
 
 export default function LayoutGate({ section }) {
-  switch (section.layout_id) {
-    case 'sect_hero_split':
-      return <HeroSection section={section} />
-
-    // future layouts:
-    // case 'two_column':
-    //   return <TwoColumnSection section={section} />
-
-    default:
-      console.warn('Unknown layout:', section.layout_id)
-      return null
-  }
+  const Section = layouts[section.layout_id] || DefaultSection
+  return <Section section={section} />
 }

@@ -10,7 +10,7 @@ export function renderPageData(page) {
     const sectionEl = document.createElement('section');
 
     section.blocks.forEach(block => {
-      if (block.type === 'text') {
+      if (block.block_type === 'text') {
         const p = document.createElement('p');
         p.textContent = block.content;
         sectionEl.appendChild(p);

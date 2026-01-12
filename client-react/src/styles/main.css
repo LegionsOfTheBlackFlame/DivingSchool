@@ -111,3 +111,23 @@ nav > div{
 }
 
 
+.contact-section {
+  padding: var(--space-7) var(--space-4);
+}
+
+.contact__inner {
+  max-width: 50ch;
+  margin: 0 auto;
+}
+
+.contact-form {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+}
+
+.contact-form label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}

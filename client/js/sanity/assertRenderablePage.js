@@ -13,7 +13,7 @@ export function assertRenderablePage(page) {
     }
 
     section.blocks.forEach((block, j) => {
-      if (!block.type) {
+      if (!block.block_type) {
         throw new Error(`Block[${i}:${j}] missing type`);
       }
 
