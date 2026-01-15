@@ -119,12 +119,23 @@ nav > div{
   object-fit: cover; /* or contain if you prefer */
 }
 
+.cta-button {
+  width: fit-content;
+ margin: var(--space-4) auto;
+  padding: var(--space-4) var(--space-6);
+  background-color: var(--color-1);
+  color: var(--color-4);
+  border: none;
+  border-radius: var(--space-5);
+  font-size: 1em;
+  cursor: pointer;
+}
 
 .contact-section {
   padding: var(--space-6) var(--space-4);
   margin: var(--space-6) 0;
   box-sizing: border-box;
-  outline: 2px solid var(--color-2);
+
 }
 
 .contact__inner {
@@ -133,7 +144,7 @@ nav > div{
   grid-template-columns: 1fr 2fr;
   max-width: 100ch;
   margin: 0 auto;
-  outline: 2px solid var(--color-2);
+
 }
 
 .contact-form {

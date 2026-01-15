@@ -1,7 +1,13 @@
 export default function HeroSection({ section }) {
+  const handleCta = () => {
+    console.log('CTA button clicked!');
+  }
   const textBlocks = section.blocks.filter(
-    b => b.block_type === 'title' || b.block_type === 'text'
-  )
+  b =>
+    b.block_type === 'title' ||
+    b.block_type === 'text' ||
+    b.block_type === 'cta'
+)
 
   const imageBlocks = section.blocks.filter(
     b => b.block_type === 'image'
@@ -10,13 +16,31 @@ export default function HeroSection({ section }) {
   return (
     <section className="hero-section">
       <div className="hero-cell hero-text">
-        <div className="text-group">
-          {textBlocks.map(block =>
-            block.block_type === 'title'
-              ? <h2 key={block.id}>{block.content}</h2>
-              : <p key={block.id}>{block.content}</p>
-          )}
-        </div>
+       <div className="text-group">
+  {textBlocks.map(block => {
+    if (block.block_type === 'title') {
+      return <h2 key={block.id}>{block.content}</h2>
+    }
+
+    if (block.block_type === 'text') {
+      return <p key={block.id}>{block.content}</p>
+    }
+
+    if (block.block_type === 'cta') {
+      return (
+        <button
+          key={block.id}
+          className="cta-button"
+          onClick={handleCta}
+        >
+          {block.content}
+        </button>
+      )
+    }
+
+    return null
+  })}
+</div>
       </div>
 
       {imageBlocks.map(block => (
