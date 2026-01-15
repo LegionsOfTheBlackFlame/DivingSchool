@@ -1,0 +1,33 @@
+.hero-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-1);
+}
+
+/* grid units */
+.hero-cell {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-3);
+  border-radius: var(--space-5);
+  overflow: hidden;
+}
+
+/* text content */
+.hero-cell .text-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-6);
+  color: var(--color-5);
+}
+
+/* image handling */
+div.hero-cell.media > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* or contain if you prefer */
+}

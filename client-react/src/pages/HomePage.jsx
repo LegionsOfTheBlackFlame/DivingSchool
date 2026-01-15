@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { fetchJson } from '../../lib/fetchJSON.js'
-import LayoutGate from '../components/LayoutGate.jsx'
+import SectionGate from '../components/SectionGate.jsx'
 
 export default function HomePage() {
   const [page, setPage] = useState(null)
@@ -31,7 +31,7 @@ export default function HomePage() {
   return (
     <>
       {page.sections.map(section => (
-        <LayoutGate key={section.id} section={section} />
+        <SectionGate key={section.id} section={section} />
       ))}
     </>
   )
