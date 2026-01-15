@@ -5,9 +5,10 @@ export default function ContactSection({ section }) {
   return (
     <section className="contact-section">
       <div className="contact__inner">
+        <div className="text-group">
         {title && <h2>{title.content}</h2>}
         {text && <p>{text.content}</p>}
-
+</div>
         <form className="contact-form">
           <label>
             Your email

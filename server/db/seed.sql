@@ -20,7 +20,7 @@ INSERT INTO sections (page_id, section_key, order_index, layout_id) VALUES
 
 -- Blocks (Home → Hero)
 INSERT INTO blocks (section_id, block_type, content, lang, order_index) VALUES
-(1, 'title', 'Welcome to Diving School', 'en', 1),
+(1, 'title', 'Into the bluest depths and towards newfound adventure!', 'en', 1),
 (1, 'text', 'Discover the underwater world with us', 'en', 2),
 (1, 'image', 'https://www.deepbluedivecenter.com/wp-content/uploads/Woman-Scuba-Diving-.png', 'en', 3),
 (2, 'title', 'Contact us', 'en', 1),
