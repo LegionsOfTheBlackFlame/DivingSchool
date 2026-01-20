@@ -19,11 +19,11 @@ export default function HeroSection({ section }) {
        <div className="text-group">
   {textBlocks.map(block => {
     if (block.block_type === 'title') {
-      return <h2 key={block.id}>{block.content}</h2>
+      return <h2 key={block.id} className="headline">{block.content}</h2>
     }
 
     if (block.block_type === 'text') {
-      return <p key={block.id}>{block.content}</p>
+      return <p key={block.id} className="subtext">{block.content}</p>
     }
 
     if (block.block_type === 'cta') {
