@@ -8,6 +8,7 @@ import pagesRouter from "./routes/pages.routes.js";
 import contentRouter from "./routes/content.routes.js";
 import divesRouter from "./routes/dives.js";
 import bookingsRouter from "./routes/bookings.js";
+import contactRouter from "./routes/contact.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -33,6 +34,7 @@ app.use("/api/pages", pagesRouter);
 app.use("/api/content", contentRouter);
 app.use("/api/dives", divesRouter);
 app.use("/api/bookings", bookingsRouter);
+app.use("/api/contact", contactRouter);
 
 // Catch-all
 app.get(/\/(?!api).*/, (req, res) => {

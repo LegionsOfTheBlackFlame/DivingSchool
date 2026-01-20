@@ -24,3 +24,10 @@ CREATE TABLE IF NOT EXISTS blocks (
   order_index INTEGER NOT NULL,
   FOREIGN KEY (section_id) REFERENCES sections(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS contact_messages (
+  id SERIAL PRIMARY KEY,
+  email TEXT NOT NULL,
+  message TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

@@ -44,3 +44,12 @@ export function getAllBlocks() {
     .prepare('SELECT * FROM content_blocks ORDER BY order_index')
     .all();
 }
+
+export function insertContactMessage({ email, message }) {
+  const stmt = db.prepare(`
+    INSERT INTO contact_messages ( email, message)
+    VALUES (?, ?)
+  `);
+
+  return stmt.run(email, message);
+}
