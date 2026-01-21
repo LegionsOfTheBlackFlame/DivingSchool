@@ -10,9 +10,12 @@ router.use(cors({
 
 router.post("/", (req, res) => {
   const {email, message } = req.body;
-  console.log(req.body);
 
-  if (!!email || !!message) {
+  console.log("REQ BODY:", req.body);
+console.log("EMAIL:", JSON.stringify(email));
+console.log("MESSAGE:", JSON.stringify(message));
+
+  if (!email || !message) {
     return res.status(400).json({ error: "Missing fields" });
   }
 

@@ -146,7 +146,7 @@ nav > div{
 
 /* --- Contact Section --- */
 .contact-section {
-  padding: var(--space-6) var(--space-4);
+
   margin: var(--space-6) 0;
   box-sizing: border-box;
 }
@@ -158,15 +158,68 @@ nav > div{
   max-width: 100ch;
   margin: 0 auto;
 }
+.contact__inner .text-group {
+  padding: 1.6em 2.9em;
+  background-color: var(--color-2);
+  color: var(--color-1);
+  border-radius: 1em 0 0 1em;
+}
+
+.contact__inner p {
+ margin: 0 0.5em;
+ 
+  opacity: 0.7;
+}
 
 .contact-form {
-  display: grid;
+ display: grid;
   gap: var(--space-4);
-  margin-top: var(--space-5);
+  background-color: var(--color-1);
+  margin: 0;
+  padding: 2em;
+  border-radius: 0 1em 1em 0;
 }
 
 .contact-form label {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
+  color: var(--color-2);
+  font-size: 1.2em;
+  font-weight: 600;
+}
+.contact-form input, .contact-form textarea {
+ font-size: 0.8rem;
+   opacity: 0.7;
+    border: 1px solid var(--color-5);
+    margin: 0 ;
+}
+.contact-form input {
+  border-radius: 3em;
+  padding: 1em 1.5em;
+
+}
+.contact-form textarea {
+ min-height: 250px;
+  border-radius: 2em;
+  padding: 1em 1.5em;
+}
+
+.contact-form button {
+
+ margin: var(--space-2);
+  padding: var(--space-4) var(--space-6);
+  background-color: var(--color-2);
+  color: var(--color-5);
+  border: none;
+  border-radius: 1.2em;
+  font-size: 1.1em;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.form-success {
+  color: var(--color-2);
+  text-align: center;
+  opacity: 0.8;
 }
