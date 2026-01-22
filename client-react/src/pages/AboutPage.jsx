@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { fetchJson } from '../../lib/fetchJSON.js'
+import SectionGate from '../components/SectionGate.jsx'
 
 export default function HomePage() {
   const [page, setPage] = useState(null)
@@ -18,18 +19,11 @@ export default function HomePage() {
     }
 
     load()
-
-    return () => {
-      cancelled = true
-    }
+    return () => { cancelled = true }
   }, [])
 
   if (error) {
-    return (
-      <pre style={{ color: 'crimson' }}>
-        {error.message}
-      </pre>
-    )
+    return <pre style={{ color: 'crimson' }}>{error.message}</pre>
   }
 
   if (!page) return <p>Loading…</p>
@@ -37,31 +31,7 @@ export default function HomePage() {
   return (
     <>
       {page.sections.map(section => (
-        <section key={section.id}>
-          {section.blocks.map(block => {
-              if (block.type === 'title') {
-              console.log(block);
-              return <h2 key={block.id}>{block.content}</h2>
-              
-            }
-            if (block.type === 'text') {
-              return <p key={block.id}>{block.content}</p>
-            }
-
-            if (block.type === 'image') {
-              return (
-                <img
-                  key={block.id}
-                  src={block.content}
-                  alt=""
-                  style={{ maxWidth: '100%', height: 'auto' }}
-                />
-              )
-            }
-
-            return null
-          })}
-        </section>
+        <SectionGate key={section.id} section={section} />
       ))}
     </>
   )

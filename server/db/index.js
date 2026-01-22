@@ -28,6 +28,7 @@ export function getSectionsByPageId(pageId) {
 }
 
 export function getBlocksBySectionId(sectionId) {
+  console.log("Getting blocks for section ID:", sectionId);
   return db
     .prepare('SELECT * FROM blocks WHERE section_id = ? ORDER BY order_index')
     .all(sectionId);
@@ -40,6 +41,7 @@ export function getAllSections() {
 }
 
 export function getAllBlocks() {
+  console.log("Fetching all content blocks from the database");
   return db
     .prepare('SELECT * FROM content_blocks ORDER BY order_index')
     .all();
