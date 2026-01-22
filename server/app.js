@@ -26,7 +26,7 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
-app.get(['/', '/home', '/booking'], (req, res) => {
+app.get(['/', '/home', '/about'], (req, res) => {
   res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 

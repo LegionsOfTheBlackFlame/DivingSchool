@@ -14,6 +14,7 @@ router.use(cors({
 }))
 
 router.get("/:slug", (req, res, next) => {
+  console.log("Fetching page with slug:", req.params.slug);
   try {
     const { slug } = req.params;
 
@@ -24,6 +25,7 @@ router.get("/:slug", (req, res, next) => {
     if (!page) {
       return res.status(404).json({ error: "Page not found" });
     }
+    console.log("Found page:", page);
 
     // 2. Sections
     const sections = getSectionsByPageId(page.id);
@@ -32,6 +34,7 @@ router.get("/:slug", (req, res, next) => {
     for (const section of sections) {
       section.blocks = getBlocksBySectionId(section.id);
     }
+    console.log("Assembled sections with blocks:", sections);
 
     // 4. Response shape frontend expects
     res.json({
