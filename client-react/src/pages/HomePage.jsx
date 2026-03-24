@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { fetchJson } from '../../lib/fetchJSON.js'
 import SectionGate from '../components/SectionGate.jsx'
+import ElfsightWidget from "../components/sections/Reviews_sect/reviews.jsx";
 
 export default function HomePage() {
   const [page, setPage] = useState(null)
@@ -32,7 +33,11 @@ export default function HomePage() {
     <>
       {page.sections.map(section => (
         <SectionGate key={section.id} section={section} />
+        
       ))}
+ 
+{/* <ElfsightWidget /> */}
+
     </>
   )
 }
