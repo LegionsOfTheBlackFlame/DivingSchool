@@ -9,6 +9,7 @@ export default function HomePage() {
 
   useEffect(() => {
     let cancelled = false
+    console.log(page);
 
     async function load() {
       try {
@@ -28,7 +29,7 @@ export default function HomePage() {
   }
 
   if (!page) return <p>Loading…</p>
-
+  console.log(page);
   return (
     <>
       {page.sections.map(section => (
