@@ -5,6 +5,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import pagesRouter from "./routes/pages.routes.js";
+import handler from "./routes/vercel_router.js";
 import contentRouter from "./routes/content.routes.js";
 import divesRouter from "./routes/dives.js";
 import bookingsRouter from "./routes/bookings.js";
@@ -30,7 +31,7 @@ app.get(['/', '/home', '/booking'], (req, res) => {
   res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
-app.use("/api/pages", pagesRouter);
+app.use("/api/pages", handler);
 app.use("/api/content", contentRouter);
 app.use("/api/dives", divesRouter);
 app.use("/api/bookings", bookingsRouter);
