@@ -1,93 +1,48 @@
-import { useState } from "react";
-
-
 export default function ContactSection({ section }) {
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState(null);
-
-  async function handleSubmit(e) {
-    console.log("Submitting contact form...", { email, message });
-    e.preventDefault();
-    setLoading(true);
-    setStatus(null);
-
-    try {
-      const res = await fetch("http://localhost:3000/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email, message })
-      });
-
-      if (!res.ok) {
-        const error = await res.json();
-        console.error("SERVER ERROR:", res);
-        throw new Error("Request failed");
-      }
-
-      setStatus("success");
-
-      setEmail("");
-      setMessage("");
-    } catch (err) {
-      setStatus("error");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-
-
-  const title = section.blocks.find(b => b.block_type === 'title')
-  const text = section.blocks.find(b => b.block_type === 'text')
+  const titleBlock = section.blocks.find(block => block.block_type === 'title');
+  const textBlocks = section.blocks.filter(block => block.block_type === 'text');
 
   return (
     <section className="contact-section">
-      <div className="contact__inner">
-        <div className="text-group">
-          {title && <h2>{title.content}</h2>}
-          {text && <p>{text.content}</p>}
+      <div className="contact-section__container">
+        {titleBlock && (
+          <h2 className="contact-section__title">{titleBlock.content}</h2>
+        )}
+
+        <div className="contact-section__list">
+          {textBlocks.map(block => {
+            const [label, ...rest] = block.content.split(':');
+            const value = rest.join(':').trim();
+
+            const normalizedLabel = label.trim().toLowerCase();
+
+            let contentNode = value;
+
+            if (normalizedLabel === 'email') {
+              contentNode = (
+                <a href={`mailto:${value}`} className="contact-section__value">
+                  {value}
+                </a>
+              );
+            } else if (normalizedLabel === 'phone') {
+              contentNode = (
+                <a href={`tel:${value}`} className="contact-section__value">
+                  {value}
+                </a>
+              );
+            } else {
+              contentNode = <span className="contact-section__value">{value}</span>;
+            }
+
+            return (
+              <article key={block.id} className="contact-section__item">
+                <h3 className="contact-section__label">{label}</h3>
+                <div className="contact-section__content">{contentNode}</div>
+              </article>
+            );
+          })}
         </div>
-        <form className="contact-form" onSubmit={handleSubmit}>
-          <label>
-            Your email
-            <input
-              type="email"
-              name="email"
-              required
-              placeholder="you@example.com"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-            />
-          </label>
-
-          <label>
-            Message
-            <textarea
-              name="message"
-              required
-              rows={5}
-              placeholder="How can we help?"
-              value={message}
-              onChange={e => setMessage(e.target.value)}
-            />
-          </label>
-          <button type="submit" disabled={loading}>
-            {loading ? "Sending..." : "Send Message"}
-          </button>
-
-          {status === "success" && (
-            <p className="form-success">Message sent successfully.</p>
-          )}
-
-          {status === "error" && (
-            <p className="form-error">Something went wrong. Try again.</p>
-          )}
-        </form>
       </div>
     </section>
-  )
+  );
 }

@@ -1,3 +1,4 @@
+import HeroImage from '../../../assets/hero-image.jpg'
 export default function HeroSection({ section }) {
   const handleCta = () => {
     console.log('CTA button clicked!');
@@ -15,6 +16,12 @@ export default function HeroSection({ section }) {
 
   return (
     <section className="hero-section">
+       {imageBlocks.map(block => (
+        <div key={block.id} className="hero-cell hero-media">
+          <img src={HeroImage} alt="" />
+          <div className='gradiant-overlay'/>
+        </div>
+      ))}
       <div className="hero-cell hero-text">
        <div className="text-group">
   {textBlocks.map(block => {
@@ -23,7 +30,7 @@ export default function HeroSection({ section }) {
     }
 
     if (block.block_type === 'text') {
-      return <p key={block.id} className="subtext">{block.content}</p>
+      return <p key={block.id} className="subtext desktop">{block.content}</p>
     }
 
     if (block.block_type === 'cta') {
@@ -41,13 +48,8 @@ export default function HeroSection({ section }) {
     return null
   })}
 </div>
-      </div>
 
-      {imageBlocks.map(block => (
-        <div key={block.id} className="hero-cell hero-media">
-          <img src={block.content} alt="" />
-        </div>
-      ))}
+      </div>
     </section>
   )
 }

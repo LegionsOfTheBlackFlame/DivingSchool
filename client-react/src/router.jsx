@@ -12,3 +12,5 @@ export const router = createBrowserRouter([
     ]
   }
 ])
+
+// Defines the client-side routing for the React application using React Router. It sets up a main layout (App) and defines routes for the HomePage and AboutPage.

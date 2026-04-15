@@ -21,7 +21,7 @@ export default function HomePage() {
     }
 
     load()
-    return () => { cancelled = true }
+    return () => { cancelled = true; setPage(null)}
   }, [])
 
   if (error) {

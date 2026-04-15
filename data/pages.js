@@ -20,21 +20,22 @@ export const pages = {
             order_index: 1,
           },
           {
+            id: 3,
+            section_id: 1,
+            block_type: 'text',
+            content: 'Scuba diving is a popular underwater activity that allows individuals to explore the ocean using a self-contained underwater breathing apparatus . It is frequently described as a serene, meditative experience that offers a sense of weightlessness, often compared to flying.',
+            lang: 'en',
+            order_index: 2,
+          },
+          {
             id: 2,
             section_id: 1,
             block_type: 'cta',
             content: 'Dive In',
             lang: 'en',
-            order_index: 2,
-          },
-          {
-            id: 3,
-            section_id: 1,
-            block_type: 'text',
-            content: '... and join our community of passionate divers.',
-            lang: 'en',
             order_index: 3,
           },
+          
           {
             id: 4,
             section_id: 1,

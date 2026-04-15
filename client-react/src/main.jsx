@@ -10,3 +10,4 @@ ReactDOM.createRoot(document.getElementById('app')).render(
     <RouterProvider router={router} />
   </React.StrictMode>
 )
+// Entry point of the React application. It sets up the RouterProvider with the defined routes and renders the app into the DOM.

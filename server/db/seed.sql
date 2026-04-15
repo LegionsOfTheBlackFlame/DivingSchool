@@ -25,8 +25,8 @@ INSERT INTO sections (page_id, section_key, order_index, layout_id) VALUES
 -- Blocks (Home → Hero)
 INSERT INTO blocks (section_id, block_type, content, lang, order_index) VALUES
 (1, 'title', 'Into the bluest depths and towards newfound adventure!', 'en', 1),
-(1, 'cta', 'Dive In', 'en', 2),
-(1, 'text', '... and join our community of passionate divers.', 'en', 3),
+(1, 'cta', 'Dive In', 'en', 3),
+(1, 'text', 'Scuba diving is a popular underwater activity that allows individuals to explore the ocean using a self-contained underwater breathing apparatus . It is frequently described as a serene, meditative experience that offers a sense of weightlessness, often compared to flying.', 'en', 2),
 (1, 'image', 'https://www.deepbluedivecenter.com/wp-content/uploads/Woman-Scuba-Diving-.png', 'en', 4),
 (2, 'title', 'Announcement', 'en', 1),
 (2, 'text', 'Book your next diving adventure with us and get 20% off!', 'en', 2),
