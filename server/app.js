@@ -4,10 +4,6 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 import pagesRouter from "./routes/pages.routes.js";
-import contentRouter from "./routes/content.routes.js";
-import divesRouter from "./routes/dives.js";
-import bookingsRouter from "./routes/bookings.js";
-import contactRouter from "./routes/contact.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,17 +20,13 @@ app.get("/api/health", (req, res) => {
 });
 
 app.get(["/", "/home", "/booking"], (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/index.html"));
+  res.sendFile(path.join(__dirname, "../client-react/index.html"));
 });
 
 app.use("/api/pages", pagesRouter);
-app.use("/api/content", contentRouter);
-app.use("/api/dives", divesRouter);
-app.use("/api/bookings", bookingsRouter);
-app.use("/api/contact", contactRouter);
 
 app.get(/\/(?!api).*/, (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/index.html"));
+  res.sendFile(path.join(__dirname, "../client-react/index.html"));
 });
 
 app.use((err, req, res, next) => {

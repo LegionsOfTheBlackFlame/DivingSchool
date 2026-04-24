@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
-
-import { pages } from "../../data/pages.js";
+import { getPage } from "../data/getPage.js";
 
 const router = express.Router();
 
@@ -9,9 +8,9 @@ router.use(cors({
   origin: "http://localhost:5173"
 }));
 
-router.get("/:slug", (req, res) => {
+router.get("/:slug", async (req, res) => {
   const { slug } = req.params;
-  const page = pages[slug];
+  const page = await getPage(slug);
 
   if (!page) {
     return res.status(404).json({ error: "Page not found" });
