@@ -1,5 +1,9 @@
 :root {
     --font-sans:  "Nunito Sans", sans-serif;;
+  --fs-xl: clamp(1.56rem,6vw,2.6rem);
+  --fs-lg: clamp(1.2rem, 4.7vw, 3.3rem);
+    --fs-md:font-size: clamp(1rem, 2vw, 2.2rem);
+   --fs-sm: font-size: clamp(0.85rem, 1.4vw, 1.05rem);
   /* spacing (distance) */
   --space-1: 0.25rem;  /* 4px */
   --space-2: 0.5rem;   /* 8px */
@@ -25,6 +29,6 @@
   --color-1: #C1D4D9;
   --color-2: #010c1b;
   --color-3: rgb(214, 160, 38);
-  --color-4: #BF500F;
+  --color-4: #9c5b15;
   --color-5: #F2E6DF;
 }

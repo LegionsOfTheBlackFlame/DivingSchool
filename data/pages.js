@@ -156,7 +156,7 @@ export const pages = {
             id: 14,
             section_id: 5,
             block_type: 'text',
-            content: 'Address: 123 Ocean Drive, Dive City',
+            content: 'Address: Büyük Liman Mevki, 2. Cad, 07070 Konyaalti/Antalya',
             lang: 'en',
             order_index: 4,
           },

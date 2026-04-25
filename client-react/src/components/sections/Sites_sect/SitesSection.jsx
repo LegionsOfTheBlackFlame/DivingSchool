@@ -1,50 +1,60 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState,useEffect } from 'react';
 import { MapPin, Compass, ChevronLeft, ChevronRight } from 'lucide-react';
+import { MapContainer, TileLayer, Marker } from 'react-leaflet';
+import L from 'leaflet';
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: markerIcon2x,
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+});
 
 
 const DIVE_SITES = [
   {
     id: 'blue-cave',
-    name: 'Blue Cave',
+    name: 'Blue Cave (Mavi Mağara)',
     description:
-      'Blue Cave is one of the most atmospheric locations in the area, known for the way light filters through the rock and washes the water in shifting shades of blue. The site feels calm, open, and cinematic, making it one of the easiest places for visitors to immediately understand why this coastline is so memorable.',
+      'A famous underwater cave known for intense blue light reflections. The entrance is wide and welcoming, making it a favorite for both beginners and experienced divers.',
     image:
       'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80',
-    mapX: 28,
-    mapY: 38,
+    lat: 36.1913,
+    lng: 29.6115,
   },
   {
-    id: 'reef-garden',
-    name: 'Reef Garden',
+    id: 'canyon',
+    name: 'The Canyon',
     description:
-      'Reef Garden offers a softer, more colorful side of the region, with layered rock formations, lively marine life, and a landscape that feels rich without being overwhelming. It is the kind of site that rewards slower exploration and leaves people with a strong sense of the texture and beauty of the underwater environment.',
+      'One of Kaş’s most iconic dive sites, featuring dramatic rock formations and a narrow canyon that opens into deeper blue water. Often visited for its unique structure and marine life.',
     image:
       'https://images.unsplash.com/photo-1551244072-5d12893278ab?auto=format&fit=crop&w=1200&q=80',
-    mapX: 55,
-    mapY: 26,
+    lat: 36.2045,
+    lng: 29.6220,
   },
   {
-    id: 'arch-point',
-    name: 'Arch Point',
+    id: 'wreck',
+    name: 'Plane Wreck',
     description:
-      'Arch Point is centered around a striking natural rock formation that gives the site a more dramatic identity than the others. The surrounding water often feels clearer and more expansive, and the combination of stone shapes, open blue, and changing light makes it one of the most visually distinctive stops on the route.',
+      'A submerged aircraft intentionally placed for divers, offering a surreal and memorable experience. Great visibility and a clear structure make it ideal for exploration and photos.',
     image:
       'https://images.unsplash.com/photo-1682687982501-1e58ab814714?auto=format&fit=crop&w=1200&q=80',
-    mapX: 71,
-    mapY: 57,
+    lat: 36.2018,
+    lng: 29.6380,
   },
   {
-    id: 'sunken-wall',
-    name: 'Sunken Wall',
+    id: 'flying-fish',
+    name: 'Flying Fish Reef',
     description:
-      'Sunken Wall has a darker, moodier character, with vertical drop-offs and a sense of depth that gives the entire site a more dramatic presence. It feels less like a simple stop and more like a place with its own atmosphere, which is exactly why it stays in people’s memory long after the boat ride back.',
+      'A lively reef known for schools of fish and vibrant underwater textures. It’s a more relaxed dive with plenty to observe, especially for those who enjoy marine life.',
     image:
       'https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?auto=format&fit=crop&w=1200&q=80',
-    mapX: 42,
-    mapY: 71,
+    lat: 36.2135,
+    lng: 29.6040,
   },
 ];
-
 function SiteMarker({ site, isActive, onSelect }) {
   return (
     <button
@@ -61,6 +71,7 @@ function SiteMarker({ site, isActive, onSelect }) {
 
 export default function DiveSitesSection() {
   const [selectedId, setSelectedId] = useState(DIVE_SITES[0].id);
+  const [locked, setLocked] = useState(false);
 
   const selectedSite = useMemo(
     () => DIVE_SITES.find((site) => site.id === selectedId) ?? DIVE_SITES[0],
@@ -78,9 +89,23 @@ export default function DiveSitesSection() {
     const nextIndex = selectedIndex === DIVE_SITES.length - 1 ? 0 : selectedIndex + 1;
     setSelectedId(DIVE_SITES[nextIndex].id);
   }
+ useEffect(() => {
+    const onScroll = () => {
+      const intro = document.querySelector(".dive-sites__intro");
+      if (!intro) return;
 
+      const rect = intro.getBoundingClientRect();
+
+      // when intro scrolls out of view
+      setLocked(rect.bottom <= 0);
+    }; 
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   return (
-    <section className="dive-sites">
+    <section className={`dive-sites ${locked ? "is-locked" : ""}`}>
       <div className="dive-sites__container">
         <div className="dive-sites__intro">
           <p className="dive-sites__eyebrow">Dive Sites</p>
@@ -95,76 +120,27 @@ export default function DiveSitesSection() {
 
         <div className="dive-sites__layout">
           <div className="dive-sites__map-shell">
-            <div className="dive-sites__map-stage">
-              <div className="dive-sites__map-background" />
+           <MapContainer
+  center={[36.201, 29.637]} // Kas area approx
+  zoom={12}
+  scrollWheelZoom={false}
+  className="dive-sites__map-stage"
+>
+  <TileLayer
+    attribution='&copy; OpenStreetMap'
+    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+  />
 
-              <div className="dive-sites__map-frame">
-                <svg
-                  viewBox="0 0 1000 700"
-                  className="dive-sites__map-svg"
-                  preserveAspectRatio="none"
-                  aria-hidden="true"
-                >
-                  <defs>
-                    <linearGradient id="seaGlow" x1="0" x2="1" y1="0" y2="1">
-                      <stop offset="0%" stopColor="#153754" />
-                      <stop offset="100%" stopColor="#0a2032" />
-                    </linearGradient>
-                  </defs>
-
-                  <rect x="0" y="0" width="1000" height="700" fill="url(#seaGlow)" />
-
-                  <path
-                    d="M82 110C150 98 246 130 305 170C360 207 413 229 461 221C525 211 582 148 655 132C731 116 834 149 902 197L902 600C847 579 779 572 715 587C656 601 618 631 562 637C485 645 435 610 374 583C318 558 251 538 189 546C144 551 108 566 82 581Z"
-                    fill="rgba(226,232,240,0.11)"
-                  />
-                  <path
-                    d="M156 177C225 165 310 195 365 236C416 273 462 291 514 284C586 274 638 213 706 202C772 191 847 216 903 258"
-                    fill="none"
-                    stroke="rgba(255,255,255,0.12)"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M182 495C248 472 300 476 363 504C421 530 467 563 533 566C595 569 646 532 706 515C771 496 835 500 892 529"
-                    fill="none"
-                    stroke="rgba(255,255,255,0.08)"
-                    strokeWidth="3"
-                    strokeDasharray="10 14"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M122 620C187 593 264 591 332 612C401 634 451 668 516 667C595 666 646 617 721 606C790 596 850 609 902 636"
-                    fill="none"
-                    stroke="rgba(255,255,255,0.05)"
-                    strokeWidth="2.5"
-                    strokeDasharray="8 14"
-                    strokeLinecap="round"
-                  />
-                </svg>
-
-                <div className="dive-sites__map-overlay" />
-
-                {DIVE_SITES.map((site) => (
-                  <SiteMarker
-                    key={site.id}
-                    site={site}
-                    isActive={site.id === selectedSite.id}
-                    onSelect={setSelectedId}
-                  />
-                ))}
-
-                <div className="dive-sites__departure-tag">Departure Zone</div>
-
-                <div className="dive-sites__map-footer">
-                  <p className="dive-sites__map-name">{selectedSite.name}</p>
-                  <div className="dive-sites__map-label">
-                    <Compass className="dive-sites__map-label-icon" />
-                    <span>Regional dive map</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+  {DIVE_SITES.map(site => (
+    <Marker
+      key={site.id}
+      position={[site.lat, site.lng]}
+      eventHandlers={{
+        click: () => setSelectedId(site.id)
+      }}
+    />
+  ))}
+</MapContainer>
           </div>
 
           <article className="dive-sites__card">

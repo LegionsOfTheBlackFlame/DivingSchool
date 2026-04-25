@@ -4,6 +4,7 @@ import { RouterProvider } from 'react-router-dom'
 import { router } from './router.jsx'
 import './styles/main.css'
 import './styles/tokens.css'
+import 'leaflet/dist/leaflet.css';
 
 ReactDOM.createRoot(document.getElementById('app')).render(
    <React.StrictMode>
