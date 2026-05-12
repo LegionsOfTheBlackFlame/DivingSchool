@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-
+import { useLanguage } from './LanguageContext'
 
 const LANGUAGES = [
   { code: 'en', label: 'English' },
@@ -10,8 +10,9 @@ const LANGUAGES = [
 
 export default function LanguageSwitcher() {
   const [isOpen, setIsOpen] = useState(false)
-  const [selectedCode, setSelectedCode] = useState('en')
   const rootRef = useRef(null)
+
+  const { lang, setLang } = useLanguage() // 🔑 this replaces local state
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -25,10 +26,12 @@ export default function LanguageSwitcher() {
   }, [])
 
   const current =
-    LANGUAGES.find(language => language.code === selectedCode) || LANGUAGES[0]
+    LANGUAGES.find(language => language.code === lang) || LANGUAGES[0]
 
   function handleSelect(code) {
-    setSelectedCode(code)
+    console.log('clicked:', code)
+    setLang(code) // 🔑 global update
+    
     setIsOpen(false)
   }
 
@@ -60,7 +63,7 @@ export default function LanguageSwitcher() {
             <button
               key={language.code}
               className={`lang-switcher__option ${
-                language.code === selectedCode ? 'is-active' : ''
+                language.code === lang ? 'is-active' : ''
               }`}
               type="button"
               role="menuitem"

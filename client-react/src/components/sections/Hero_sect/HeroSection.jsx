@@ -1,4 +1,5 @@
 import HeroImage from '../../../assets/hero-image.jpg'
+import React from 'react'
 export default function HeroSection({ section }) {
   const handleCta = () => {
     console.log('CTA button clicked!');
@@ -30,7 +31,10 @@ export default function HeroSection({ section }) {
     }
 
     if (block.block_type === 'text') {
-      return <p key={block.id} className="subtext desktop">{block.content}</p>
+      return <div key={block.id} className="subtext desktop">  {block.content.split('||').map((part, i) => (
+    <p key={i}>{part}</p>
+  ))}
+</div>
     }
 
     if (block.block_type === 'cta') {

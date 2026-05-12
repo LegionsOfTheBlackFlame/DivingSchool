@@ -15,7 +15,7 @@ export const pages = {
             id: 1,
             section_id: 1,
             block_type: 'title',
-            content: 'Into the bluest depths and towards newfound adventure!',
+            content: 'Not Just Diving, A Tailored Experience for You!',
             lang: 'en',
             order_index: 1,
           },
@@ -23,7 +23,7 @@ export const pages = {
             id: 3,
             section_id: 1,
             block_type: 'text',
-            content: 'Scuba diving is a popular underwater activity that allows individuals to explore the ocean using a self-contained underwater breathing apparatus . It is frequently described as a serene, meditative experience that offers a sense of weightlessness, often compared to flying.',
+            content: 'In Antalya, with our VIP boat limited to a maximum of 10 guests, we offer a fully personalized diving experience away from the crowds. With 2 dives per day and a carefully prepared lunch, we combine comfort and quality.||With 16 years of experience, we provide one-on-one diving training in central Antalya using modern equipment, and ensure you explore the region’s most beautiful dive sites safely.||Our trainings are conducted by expert instructors experienced in underwater search and rescue. Our goal is to make you feel safe while giving you a truly unforgettable experience beneath the sea.',
             lang: 'en',
             order_index: 2,
           },
@@ -79,12 +79,20 @@ export const pages = {
           },
         ],
       },
-      {
+          {
         id: 3,
+        page_id: 1,
+        section_key: 'certificates',
+        layout_id: 'sect_certificates',
+        order_index: 3,
+      
+      },
+      {
+        id: 4,
         page_id: 1,
         section_key: 'review',
         layout_id: 'sect_review',
-        order_index: 3,
+        order_index: 4,
         blocks: [
           {
             id: 8,
@@ -97,11 +105,11 @@ export const pages = {
         ],
       },
       {
-        id: 4,
+        id: 5,
         page_id: 1,
         section_key: 'sites',
         layout_id: 'sect_sites',
-        order_index: 4,
+        order_index: 5,
         blocks: [
           {
             id: 9,
@@ -122,11 +130,11 @@ export const pages = {
         ],
       },
       {
-        id: 5,
+        id: 6,
         page_id: 1,
         section_key: 'contact_info',
         layout_id: 'sect_contact_info',
-        order_index: 5,
+        order_index: 6,
         blocks: [
           {
             id: 11,
@@ -162,6 +170,7 @@ export const pages = {
           },
         ],
       },
+  
     ],
   },
   about: {
@@ -170,7 +179,7 @@ export const pages = {
     title: 'About Us',
     sections: [
       {
-        id: 6,
+        id: 7,
         page_id: 2,
         section_key: 'about',
         layout_id: 'default',
@@ -197,3 +206,202 @@ export const pages = {
     ],
   },
 };
+export const pages_tr = {
+    home: {
+    id: 1,
+    slug: 'home',
+    title: 'Home Page',
+    sections: [
+      {
+        id: 1,
+        page_id: 1,
+        section_key: 'hero',
+        layout_id: 'sect_hero_split',
+        order_index: 1,
+        blocks: [
+          {
+            id: 1,
+            section_id: 1,
+            block_type: 'title',
+            content: ' Sadece Dalış Değil, Size Özel Bir Deneyim',
+            lang: 'tr',
+            order_index: 1,
+          },
+          {
+            id: 3,
+            section_id: 1,
+            block_type: 'text',
+            content: 'Antalya’da maksimum 10 kişilik VIP teknemizle, kalabalıktan uzak, tamamen size özel bir dalış deneyimi sunuyoruz. Günde 2 dalış ve özenle hazırlanmış öğle yemeği ile konfor ve kaliteyi bir araya getiriyoruz.||16 yıllık deneyimimizle, Antalya merkezde modern ekipmanlar eşliğinde birebir dalış eğitimi veriyor; bölgenin en güzel dalış noktalarını güvenli şekilde keşfetmenizi sağlıyoruz.||Eğitimlerimiz, su altı arama ve kurtarma alanında tecrübeli uzman eğitmenler tarafından verilmektedir. Amacımız, hem kendinizi güvende hissetmeniz hem de denizin altında gerçekten unutulmaz bir deneyim yaşamanız.',
+            lang: 'tr',
+            order_index: 2,
+          },
+          {
+            id: 2,
+            section_id: 1,
+            block_type: 'cta',
+            content: 'Dive In',
+            lang: 'tr',
+            order_index: 3,
+          },
+          
+          {
+            id: 4,
+            section_id: 1,
+            block_type: 'image',
+            content: 'https://www.deepbluedivecenter.com/wp-content/uploads/Woman-Scuba-Diving-.png',
+            lang: 'tr',
+            order_index: 4,
+          },
+        ],
+      },
+      {
+        id: 2,
+        page_id: 1,
+        section_key: 'announcement',
+        layout_id: 'sect_announcement',
+        order_index: 2,
+        blocks: [
+          {
+            id: 5,
+            section_id: 2,
+            block_type: 'title',
+            content: "Kas'ın Dalgaları Altında",
+            lang: 'tr',
+            order_index: 1,
+          },
+          {
+            id: 6,
+            section_id: 2,
+            block_type: 'text',
+            content: "Diğer dalış tutkunlarıyla birlikte teknemize binin ve Kaş'ın dalgaları altında unutulmaz bir yolculuğa çıkın.",
+            lang: 'tr',
+            order_index: 2,
+          },
+          {
+            id: 7,
+            section_id: 2,
+            block_type: 'image',
+            content: 'https://www.deepbluedivecenter.com/wp-content/uploads/Woman-Scuba-Diving-.png',
+            lang: 'tr',
+            order_index: 3,
+          },
+        ],
+      },
+      {
+        id: 3,
+        page_id: 1,
+        section_key: 'review',
+        layout_id: 'sect_review',
+        order_index: 3,
+        blocks: [
+          {
+            id: 8,
+            section_id: 3,
+            block_type: 'placeholder',
+            content: 'reviews',
+            lang: '-',
+            order_index: 1,
+          },
+        ],
+      },
+      {
+        id: 4,
+        page_id: 1,
+        section_key: 'sites',
+        layout_id: 'sect_sites',
+        order_index: 4,
+        blocks: [
+          {
+            id: 9,
+            section_id: 4,
+            block_type: 'title',
+            content: 'Dalış Noktaları',
+            lang: 'tr',
+            order_index: 1,
+          },
+          {
+            id: 10,
+            section_id: 4,
+            block_type: 'placeholder',
+            content: 'map',
+            lang: 'tr',
+            order_index: 2,
+          },
+        ],
+      },
+      {
+        id: 5,
+        page_id: 1,
+        section_key: 'contact_info',
+        layout_id: 'sect_contact_info',
+        order_index: 5,
+        blocks: [
+          {
+            id: 11,
+            section_id: 5,
+            block_type: 'title',
+            content: 'Bize Ulaşın',
+            lang: 'tr',
+            order_index: 1,
+          },
+          {
+            id: 12,
+            section_id: 5,
+            block_type: 'text',
+            content: 'Email: mustafabilyaz@gmail.com',
+            lang: 'tr',
+            order_index: 2,
+          },
+          {
+            id: 13,
+            section_id: 5,
+            block_type: 'text',
+            content: 'Phone: +1234567890',
+            lang: 'tr',
+            order_index: 3,
+          },
+          {
+            id: 14,
+            section_id: 5,
+            block_type: 'text',
+            content: 'Address: Büyük Liman Mevki, 2. Cad, 07070 Konyaalti/Antalya',
+            lang: 'tr',
+            order_index: 4,
+          },
+        ],
+      },
+    ],
+  },
+  about: {
+    id: 2,
+    slug: 'about',
+    title: 'About Us',
+    sections: [
+      {
+        id: 6,
+        page_id: 2,
+        section_key: 'about',
+        layout_id: 'default',
+        order_index: 1,
+        blocks: [
+          {
+            id: 15,
+            section_id: 6,
+            block_type: 'title',
+            content: 'About Us',
+            lang: 'tr',
+            order_index: 1,
+          },
+          {
+            id: 16,
+            section_id: 6,
+            block_type: 'text',
+            content: 'We teach safe, memorable diving experiences for curious beginners and seasoned explorers alike.',
+            lang: 'tr',
+            order_index: 2,
+          },
+        ],
+      },
+    ],
+  },
+}

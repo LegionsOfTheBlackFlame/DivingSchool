@@ -1,10 +1,12 @@
 import React, { useMemo, useState,useEffect } from 'react';
 import { MapPin, Compass, ChevronLeft, ChevronRight } from 'lucide-react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
+import { fetchJson } from '../../../../lib/fetchJSON.js'
 import L from 'leaflet';
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+import { useLanguage } from '../../../layouts/languageContext.jsx'
 
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: markerIcon2x,
@@ -69,25 +71,54 @@ function SiteMarker({ site, isActive, onSelect }) {
   );
 }
 
-export default function DiveSitesSection() {
-  const [selectedId, setSelectedId] = useState(DIVE_SITES[0].id);
+export default function DivingSitesSection() {
+ const { lang } = useLanguage()
+const [sites, setSites] = useState([])
+const [selectedId, setSelectedId] = useState(null)
   const [locked, setLocked] = useState(false);
+  
+useEffect(() => {
+  let cancelled = false
 
-  const selectedSite = useMemo(
-    () => DIVE_SITES.find((site) => site.id === selectedId) ?? DIVE_SITES[0],
-    [selectedId]
-  );
+  async function load() {
+    try {
+      console.log('FETCHING SITES:', lang)
 
-  const selectedIndex = DIVE_SITES.findIndex((site) => site.id === selectedSite.id);
+      const data = await fetchJson(`/api/dive-sites?lang=${lang}`)
+
+      console.log('SITES DATA:', data)
+
+      if (!cancelled) {
+        setSites(data)
+        setSelectedId(data[0]?.id)
+      }
+    } catch (err) {
+      console.error('FETCH ERROR:', err)
+    }
+  }
+
+  load()
+
+  return () => {
+    cancelled = true
+  }
+}, [lang])
+
+const selectedSite = useMemo(() => {
+  if (!sites.length) return null
+  return sites.find(site => site.id === selectedId) || sites[0]
+}, [sites, selectedId])
+
+  const selectedIndex = sites.findIndex((site) => site.id === selectedSite.id);
 
   function showPreviousSite() {
-    const previousIndex = selectedIndex === 0 ? DIVE_SITES.length - 1 : selectedIndex - 1;
-    setSelectedId(DIVE_SITES[previousIndex].id);
+    const previousIndex = selectedIndex === 0 ? sites.length - 1 : selectedIndex - 1;
+    setSelectedId(sites[previousIndex].id);
   }
 
   function showNextSite() {
-    const nextIndex = selectedIndex === DIVE_SITES.length - 1 ? 0 : selectedIndex + 1;
-    setSelectedId(DIVE_SITES[nextIndex].id);
+    const nextIndex = selectedIndex === sites.length - 1 ? 0 : selectedIndex + 1;
+    setSelectedId(sites[nextIndex].id);
   }
  useEffect(() => {
     const onScroll = () => {
@@ -104,6 +135,7 @@ export default function DiveSitesSection() {
 
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+  if (!sites.length || !selectedSite) return null
   return (
     <section className={`dive-sites ${locked ? "is-locked" : ""}`}>
       <div className="dive-sites__container">
@@ -121,7 +153,7 @@ export default function DiveSitesSection() {
         <div className="dive-sites__layout">
           <div className="dive-sites__map-shell">
            <MapContainer
-  center={[36.201, 29.637]} // Kas area approx
+  center={[36.8884457, 30.6431361]} // Kas area approx
   zoom={12}
   scrollWheelZoom={false}
   className="dive-sites__map-stage"
@@ -131,7 +163,7 @@ export default function DiveSitesSection() {
     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
   />
 
-  {DIVE_SITES.map(site => (
+  {sites.map(site => (
     <Marker
       key={site.id}
       position={[site.lat, site.lng]}
