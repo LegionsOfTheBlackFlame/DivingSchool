@@ -18,7 +18,7 @@ L.Icon.Default.mergeOptions({
 const DIVE_SITES = [
   {
     id: 'blue-cave',
-    name: 'Blue Cave (Mavi Mağara)',
+    title: 'Blue Cave (Mavi Mağara)',
     description:
       'A famous underwater cave known for intense blue light reflections. The entrance is wide and welcoming, making it a favorite for both beginners and experienced divers.',
     image:
@@ -28,7 +28,7 @@ const DIVE_SITES = [
   },
   {
     id: 'canyon',
-    name: 'The Canyon',
+    title: 'The Canyon',
     description:
       'One of Kaş’s most iconic dive sites, featuring dramatic rock formations and a narrow canyon that opens into deeper blue water. Often visited for its unique structure and marine life.',
     image:
@@ -38,7 +38,7 @@ const DIVE_SITES = [
   },
   {
     id: 'wreck',
-    name: 'Plane Wreck',
+    title: 'Plane Wreck',
     description:
       'A submerged aircraft intentionally placed for divers, offering a surreal and memorable experience. Great visibility and a clear structure make it ideal for exploration and photos.',
     image:
@@ -48,7 +48,7 @@ const DIVE_SITES = [
   },
   {
     id: 'flying-fish',
-    name: 'Flying Fish Reef',
+    title: 'Flying Fish Reef',
     description:
       'A lively reef known for schools of fish and vibrant underwater textures. It’s a more relaxed dive with plenty to observe, especially for those who enjoy marine life.',
     image:
@@ -61,7 +61,7 @@ function SiteMarker({ site, isActive, onSelect }) {
   return (
     <button
       type="button"
-      aria-label={`Show ${site.name}`}
+      aria-label={`Show ${site.title}`}
       onClick={() => onSelect(site.id)}
       className={`dive-sites__marker ${isActive ? 'is-active' : ''}`}
       style={{ left: `${site.mapX}%`, top: `${site.mapY}%` }}
@@ -179,7 +179,7 @@ const selectedSite = useMemo(() => {
             <div className="dive-sites__card-image-wrap">
               <img
                 src={selectedSite.image}
-                alt={selectedSite.name}
+                alt={selectedSite.title}
                 className="dive-sites__card-image"
               />
               <div className="dive-sites__card-image-overlay" />
@@ -188,7 +188,7 @@ const selectedSite = useMemo(() => {
             <div className="dive-sites__card-body">
               <div className="dive-sites__card-header">
                 <div>
-                  <h3 className="dive-sites__card-title">{selectedSite.name}</h3>
+                  <h3 className="dive-sites__card-title">{selectedSite.title}</h3>
                 </div>
 
                 <div className="dive-sites__card-controls">

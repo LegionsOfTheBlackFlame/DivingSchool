@@ -85,7 +85,6 @@ export const pages = {
         section_key: 'certificates',
         layout_id: 'sect_certificates',
         order_index: 3,
-      
       },
       {
         id: 4,
@@ -170,6 +169,9 @@ export const pages = {
           },
         ],
       },
+      {
+        id
+      }
   
     ],
   },
