@@ -9,7 +9,7 @@ export function LanguageProvider({ children }) {
   const [lang, setLang] = useState(() => {
     return localStorage.getItem(STORAGE_KEY) || DEFAULT_LANG
   })
-
+ 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, lang)
   }, [lang])

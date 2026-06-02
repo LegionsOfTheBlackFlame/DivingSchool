@@ -33,7 +33,7 @@ export default function LanguageSwitcher() {
     setLang(code) // 🔑 global update
     
     setIsOpen(false)
-  }
+  }  
 
   return (
     <div className="lang-switcher" ref={rootRef}>
