@@ -1,12 +1,13 @@
-import React, { useMemo, useState,useEffect } from 'react';
-import { MapPin, Compass, ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useMemo, useState, useEffect } from 'react';
+import { MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
-import { fetchJson } from '../../../../lib/fetchJSON.js'
 import L from 'leaflet';
+import { useLanguage } from '../../../layouts/LanguageContext.jsx'
+import { fetchJson } from '../../../../lib/fetchJSON.js'
+
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
-import { useLanguage } from '../../../layouts/LanguageContext.jsx'
 
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: markerIcon2x,
@@ -14,128 +15,88 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 });
 
+function DivingSitesSection() {
+  const { lang } = useLanguage()
 
-const DIVE_SITES = [
-  {
-    id: 'blue-cave',
-    title: 'Blue Cave (Mavi Mağara)',
-    description:
-      'A famous underwater cave known for intense blue light reflections. The entrance is wide and welcoming, making it a favorite for both beginners and experienced divers.',
-    image:
-      'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80',
-    lat: 36.1913,
-    lng: 29.6115,
-  },
-  {
-    id: 'canyon',
-    title: 'The Canyon',
-    description:
-      'One of Kaş’s most iconic dive sites, featuring dramatic rock formations and a narrow canyon that opens into deeper blue water. Often visited for its unique structure and marine life.',
-    image:
-      'https://images.unsplash.com/photo-1551244072-5d12893278ab?auto=format&fit=crop&w=1200&q=80',
-    lat: 36.2045,
-    lng: 29.6220,
-  },
-  {
-    id: 'wreck',
-    title: 'Plane Wreck',
-    description:
-      'A submerged aircraft intentionally placed for divers, offering a surreal and memorable experience. Great visibility and a clear structure make it ideal for exploration and photos.',
-    image:
-      'https://images.unsplash.com/photo-1682687982501-1e58ab814714?auto=format&fit=crop&w=1200&q=80',
-    lat: 36.2018,
-    lng: 29.6380,
-  },
-  {
-    id: 'flying-fish',
-    title: 'Flying Fish Reef',
-    description:
-      'A lively reef known for schools of fish and vibrant underwater textures. It’s a more relaxed dive with plenty to observe, especially for those who enjoy marine life.',
-    image:
-      'https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?auto=format&fit=crop&w=1200&q=80',
-    lat: 36.2135,
-    lng: 29.6040,
-  },
-];
-function SiteMarker({ site, isActive, onSelect }) {
-  return (
-    <button
-      type="button"
-      aria-label={`Show ${site.title}`}
-      onClick={() => onSelect(site.id)}
-      className={`dive-sites__marker ${isActive ? 'is-active' : ''}`}
-      style={{ left: `${site.mapX}%`, top: `${site.mapY}%` }}
-    >
-      <MapPin className="dive-sites__marker-icon" />
-    </button>
-  );
-}
+  const [section, setSection] = useState(null)
+  const [selectedId, setSelectedId] = useState(null)
+  const [locked, setLocked] = useState(false)
 
-export default function DivingSitesSection() {
- const { lang } = useLanguage()
-const [sites, setSites] = useState([])
-const [selectedId, setSelectedId] = useState(null)
-  const [locked, setLocked] = useState(false);
-  
-useEffect(() => {
-  let cancelled = false
+  useEffect(() => {
+    let cancelled = false
 
-  async function load() {
-    try {
-      console.log('FETCHING SITES:', lang)
-
+    async function load() {
       const data = await fetchJson(`/api/dive-sites?lang=${lang}`)
 
-      console.log('SITES DATA:', data)
+      if (cancelled) return
 
-      if (!cancelled) {
-        setSites(data)
-        setSelectedId(data[0]?.id)
-      }
-    } catch (err) {
-      console.error('FETCH ERROR:', err)
+      setSection(data)
     }
-  }
 
-  load()
+    load()
 
-  return () => {
-    cancelled = true
-  }
-}, [lang])
+    return () => { cancelled = true }
+  }, [lang])
 
-const selectedSite = useMemo(() => {
-  if (!sites.length) return null
-  return sites.find(site => site.id === selectedId) || sites[0]
-}, [sites, selectedId])
+  // ✅ Extract dive sites from DB
+  const sites = useMemo(() => {
+    if (!section?.blocks) return []
 
-  const selectedIndex = sites.findIndex((site) => site.id === selectedSite.id);
+    const listBlock = section.blocks.find(
+      b => b.block_type === 'list'
+    )
+
+    return listBlock?.dive_sites?.map(site => ({
+      id: site.id,
+      title: site.name,
+      description: site.description,
+
+      // fallback values since DB doesn't provide them yet
+      image: site.image || 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80',
+      lat: site.lat ?? 36.20,
+      lng: site.lng ?? 29.60
+    })) ?? []
+  }, [section])
+
+  useEffect(() => {
+    if (sites.length && !selectedId) {
+      setSelectedId(sites[0].id)
+    }
+  }, [sites, selectedId])
+
+  const selectedSite = useMemo(() => {
+    return sites.find(s => s.id === selectedId) || sites[0]
+  }, [sites, selectedId])
+
+  const selectedIndex = sites.findIndex(s => s.id === selectedSite?.id)
 
   function showPreviousSite() {
-    const previousIndex = selectedIndex === 0 ? sites.length - 1 : selectedIndex - 1;
-    setSelectedId(sites[previousIndex].id);
+    const prev = selectedIndex === 0 ? sites.length - 1 : selectedIndex - 1
+    setSelectedId(sites[prev].id)
   }
 
   function showNextSite() {
-    const nextIndex = selectedIndex === sites.length - 1 ? 0 : selectedIndex + 1;
-    setSelectedId(sites[nextIndex].id);
+    const next = selectedIndex === sites.length - 1 ? 0 : selectedIndex + 1
+    setSelectedId(sites[next].id)
   }
- useEffect(() => {
+
+  useEffect(() => {
     const onScroll = () => {
-      const intro = document.querySelector(".dive-sites__intro");
-      if (!intro) return;
+      const intro = document.querySelector(".dive-sites__intro")
+      if (!intro) return
 
-      const rect = intro.getBoundingClientRect();
+      const rect = intro.getBoundingClientRect()
+      setLocked(rect.bottom <= 0)
+    }
 
-      // when intro scrolls out of view
-      setLocked(rect.bottom <= 0);
-    }; 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true })
+    onScroll()
 
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
+
   if (!sites.length || !selectedSite) return null
+
   return (
     <section className={`dive-sites ${locked ? "is-locked" : ""}`}>
       <div className="dive-sites__container">
@@ -152,27 +113,27 @@ const selectedSite = useMemo(() => {
 
         <div className="dive-sites__layout">
           <div className="dive-sites__map-shell">
-           <MapContainer
-  center={[36.8884457, 30.6431361]} // Kas area approx
-  zoom={12}
-  scrollWheelZoom={false}
-  className="dive-sites__map-stage"
->
-  <TileLayer
-    attribution='&copy; OpenStreetMap'
-    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-  />
+            <MapContainer
+              center={[36.8884457, 30.6431361]}
+              zoom={12}
+              scrollWheelZoom={false}
+              className="dive-sites__map-stage"
+            >
+              <TileLayer
+                attribution='&copy; OpenStreetMap'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
 
-  {sites.map(site => (
-    <Marker
-      key={site.id}
-      position={[site.lat, site.lng]}
-      eventHandlers={{
-        click: () => setSelectedId(site.id)
-      }}
-    />
-  ))}
-</MapContainer>
+              {sites.map(site => (
+                <Marker
+                  key={site.id}
+                  position={[site.lat, site.lng]}
+                  eventHandlers={{
+                    click: () => setSelectedId(site.id)
+                  }}
+                />
+              ))}
+            </MapContainer>
           </div>
 
           <article className="dive-sites__card">
@@ -187,35 +148,29 @@ const selectedSite = useMemo(() => {
 
             <div className="dive-sites__card-body">
               <div className="dive-sites__card-header">
-                <div>
-                  <h3 className="dive-sites__card-title">{selectedSite.title}</h3>
-                </div>
+                <h3 className="dive-sites__card-title">
+                  {selectedSite.title}
+                </h3>
 
                 <div className="dive-sites__card-controls">
-                  <button
-                    type="button"
-                    aria-label="Show previous site"
-                    onClick={showPreviousSite}
-                    className="dive-sites__card-control"
-                  >
-                    <ChevronLeft className="dive-sites__card-control-icon" />
+                  <button onClick={showPreviousSite}>
+                    <ChevronLeft />
                   </button>
-                  <button
-                    type="button"
-                    aria-label="Show next site"
-                    onClick={showNextSite}
-                    className="dive-sites__card-control"
-                  >
-                    <ChevronRight className="dive-sites__card-control-icon" />
+                  <button onClick={showNextSite}>
+                    <ChevronRight />
                   </button>
                 </div>
               </div>
 
-              <p className="dive-sites__card-text">{selectedSite.description}</p>
+              <p className="dive-sites__card-text">
+                {selectedSite.description}
+              </p>
             </div>
           </article>
         </div>
       </div>
     </section>
-  );
+  )
 }
+
+export default DivingSitesSection
