@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import LanguageSwitcher from "./Languageswitch";
+import LanguageSwitcher from "./LanguageSwitch";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
