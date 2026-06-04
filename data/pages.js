@@ -169,9 +169,6 @@ export const pages = {
           },
         ],
       },
-      {
-        id
-      }
   
     ],
   },
