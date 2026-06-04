@@ -1,9 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import L from 'leaflet';
-import { useLanguage } from '../../../layouts/LanguageContext.jsx'
-import { fetchJson } from '../../../../lib/fetchJSON.js'
 
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
@@ -15,99 +13,107 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 });
 
-function DivingSitesSection() {
-  const { lang } = useLanguage()
+function DivingSitesSection({ section }) {
+  const [selectedId, setSelectedId] = useState(null);
+  const [locked, setLocked] = useState(false);
 
-  const [section, setSection] = useState(null)
-  const [selectedId, setSelectedId] = useState(null)
-  const [locked, setLocked] = useState(false)
-
-  useEffect(() => {
-    let cancelled = false
-
-    async function load() {
-      const data = await fetchJson(`/api/dive-sites?lang=${lang}`)
-
-      if (cancelled) return
-
-      setSection(data)
-    }
-
-    load()
-
-    return () => { cancelled = true }
-  }, [lang])
-
-  // ✅ Extract dive sites from DB
   const sites = useMemo(() => {
-    if (!section?.blocks) return []
+    if (!section?.blocks) return [];
 
     const listBlock = section.blocks.find(
       b => b.block_type === 'list'
-    )
+    );
 
-    return listBlock?.dive_sites?.map(site => ({
-      id: site.id,
-      title: site.name,
-      description: site.description,
-
-      // fallback values since DB doesn't provide them yet
-      image: site.image || 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80',
-      lat: site.lat ?? 36.20,
-      lng: site.lng ?? 29.60
-    })) ?? []
-  }, [section])
+    return (
+      listBlock?.dive_sites?.map(site => ({
+        id: site.id,
+        title: site.name,
+        description: site.description,
+        image:
+          site.image ||
+          'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80',
+        lat: site.lat ?? 36.20,
+        lng: site.lng ?? 29.60,
+      })) ?? []
+    );
+  }, [section]);
 
   useEffect(() => {
     if (sites.length && !selectedId) {
-      setSelectedId(sites[0].id)
+      setSelectedId(sites[0].id);
     }
-  }, [sites, selectedId])
+  }, [sites, selectedId]);
 
   const selectedSite = useMemo(() => {
-    return sites.find(s => s.id === selectedId) || sites[0]
-  }, [sites, selectedId])
+    return sites.find(s => s.id === selectedId) || sites[0];
+  }, [sites, selectedId]);
 
-  const selectedIndex = sites.findIndex(s => s.id === selectedSite?.id)
+  const selectedIndex = sites.findIndex(
+    s => s.id === selectedSite?.id
+  );
 
   function showPreviousSite() {
-    const prev = selectedIndex === 0 ? sites.length - 1 : selectedIndex - 1
-    setSelectedId(sites[prev].id)
+    const prev =
+      selectedIndex === 0
+        ? sites.length - 1
+        : selectedIndex - 1;
+
+    setSelectedId(sites[prev].id);
   }
 
   function showNextSite() {
-    const next = selectedIndex === sites.length - 1 ? 0 : selectedIndex + 1
-    setSelectedId(sites[next].id)
+    const next =
+      selectedIndex === sites.length - 1
+        ? 0
+        : selectedIndex + 1;
+
+    setSelectedId(sites[next].id);
   }
 
   useEffect(() => {
     const onScroll = () => {
-      const intro = document.querySelector(".dive-sites__intro")
-      if (!intro) return
+      const intro = document.querySelector(
+        '.dive-sites__intro'
+      );
 
-      const rect = intro.getBoundingClientRect()
-      setLocked(rect.bottom <= 0)
-    }
+      if (!intro) return;
 
-    window.addEventListener("scroll", onScroll, { passive: true })
-    onScroll()
+      const rect = intro.getBoundingClientRect();
+      setLocked(rect.bottom <= 0);
+    };
 
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [])
+    window.addEventListener('scroll', onScroll, {
+      passive: true,
+    });
 
-  if (!sites.length || !selectedSite) return null
+    onScroll();
+
+    return () =>
+      window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  if (!sites.length || !selectedSite) return null;
 
   return (
-    <section className={`dive-sites ${locked ? "is-locked" : ""}`}>
+    <section
+      className={`dive-sites ${
+        locked ? 'is-locked' : ''
+      }`}
+    >
       <div className="dive-sites__container">
         <div className="dive-sites__intro">
-          <p className="dive-sites__eyebrow">Dive Sites</p>
+          <p className="dive-sites__eyebrow">
+            Dive Sites
+          </p>
+
           <h2 className="dive-sites__title">
             Explore the waters we return to again and again.
           </h2>
+
           <p className="dive-sites__lead">
-            Browse a few of our favorite locations, see where they sit on the map,
-            and get a feel for the kind of dives each site offers.
+            Browse a few of our favorite locations, see where
+            they sit on the map, and get a feel for the kind
+            of dives each site offers.
           </p>
         </div>
 
@@ -120,7 +126,7 @@ function DivingSitesSection() {
               className="dive-sites__map-stage"
             >
               <TileLayer
-                attribution='&copy; OpenStreetMap'
+                attribution="&copy; OpenStreetMap"
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
 
@@ -129,7 +135,7 @@ function DivingSitesSection() {
                   key={site.id}
                   position={[site.lat, site.lng]}
                   eventHandlers={{
-                    click: () => setSelectedId(site.id)
+                    click: () => setSelectedId(site.id),
                   }}
                 />
               ))}
@@ -143,6 +149,7 @@ function DivingSitesSection() {
                 alt={selectedSite.title}
                 className="dive-sites__card-image"
               />
+
               <div className="dive-sites__card-image-overlay" />
             </div>
 
@@ -156,6 +163,7 @@ function DivingSitesSection() {
                   <button onClick={showPreviousSite}>
                     <ChevronLeft />
                   </button>
+
                   <button onClick={showNextSite}>
                     <ChevronRight />
                   </button>
@@ -170,7 +178,7 @@ function DivingSitesSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
-export default DivingSitesSection
+export default DivingSitesSection;
