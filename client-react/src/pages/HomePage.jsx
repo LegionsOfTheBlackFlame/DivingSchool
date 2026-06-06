@@ -19,6 +19,21 @@ useEffect(() => {
     console.log('REQUEST URL:', `/api/pages/home?lang=${lang}`)
     setError(null)
     const data = await fetchJson(`/api/pages/home?lang=${lang}`)
+    console.log(
+  'FIRST HERO TITLE:',
+  data.sections
+    ?.find(s => s.section_key === 'hero')
+    ?.blocks?.find(b => b.block_type === 'title')
+    ?.content
+)
+
+console.log(
+  'FIRST HERO TEXT:',
+  data.sections
+    ?.find(s => s.section_key === 'hero')
+    ?.blocks?.find(b => b.block_type === 'text')
+    ?.content
+)
     if (!cancelled) setPage(data)
       console.log('NEW PAGE REF:', data)
   }

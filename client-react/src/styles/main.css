@@ -35,9 +35,10 @@ nav {
  min-height: var(--space-5);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding: 1rem 2rem;
   position: fixed;
+  
   width: 100%;
   z-index: 1000;
 
@@ -46,6 +47,19 @@ nav {
     box-shadow 300ms ease,
     backdrop-filter 300ms ease;
 
+}
+nav > div {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  width: 100%;
+}
+.nav-center{
+  margin: auto;
+   justify-self: center;
+}
+.nav-right{
+  justify-self: end;
 }
 
 .navbar--scrolled {
@@ -58,6 +72,9 @@ nav {
   margin: 0;
   font-size: var(--space-6);
   font-weight: 700;
+}
+.navlogo {
+  max-height: 4rem;
 }
 
 /* --- Nav links --- */

@@ -52,7 +52,8 @@ export async function getPageFromDb(slug, lang = 'en') {
     `,
     [sectionIds]
   )
-
+console.log('BLOCK TABLE USED:', blocksTable)
+console.log('FIRST BLOCK:', blocksResult.rows[0])
   const blocks = blocksResult.rows
 
   // -----------------------------
