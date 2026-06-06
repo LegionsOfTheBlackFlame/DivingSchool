@@ -1,7 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
 import path from "path";
-import serverless from "serverless-http";
 import { fileURLToPath } from "url";
 
 import pagesRouter from "./routes/pages.routes.js";
@@ -37,4 +36,4 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: "Internal server error" });
 });
 
-export default serverless(app);
+export default app;
