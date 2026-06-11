@@ -61,7 +61,7 @@ export default function Certificates({ section }) {
             className={`certificate-card ${active ? 'active' : ''} ${inactive ? 'inactive' : ''}`}
             onClick={() => setActiveCard(active ? null : cert.id)}
           >
-            <img src={cert.logo} alt={cert.title} />
+            <img src={cert.logo} alt={cert.title} className="certificate-card__logo" />
             <h3>{cert.title}</h3>
 
             <div className="certificate-card__body">

@@ -3,8 +3,8 @@ import { pool } from '../dbPool.js'
 const TABLE_MAP = {
   en: 'blocks_en',
   tr: 'blocks_tr',
-  de: 'blocks_de',
-  fr: 'blocks_fr',
+  ru: 'blocks_ru',
+  fa: 'blocks_fa',
 }
 
 export async function getPageFromDb(slug, lang = 'en') {
@@ -68,11 +68,13 @@ console.log('FIRST BLOCK:', blocksResult.rows[0])
 
   const certificates = certificatesResult.rows
 
-  const diveSitesTable =
-    lang === 'tr'
-      ? 'micro_dive_sites_tr'
-      : 'micro_dive_sites_en'
-
+ const diveSitesTable =
+  {
+    tr: 'micro_dive_sites_tr',
+    ru: 'micro_dive_sites_ru',
+    en: 'micro_dive_sites_en',
+  }[lang] || 'micro_dive_sites_en';
+  
   const diveSitesResult = await pool.query(
     `
     SELECT *

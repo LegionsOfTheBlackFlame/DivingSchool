@@ -760,6 +760,35 @@ width: 10rem;
   }
 } 
 
+.dive-sites__read-more {
+  background: none;
+  border: none;
+  color: var(--color-4);
+  cursor: pointer;
+  padding: 0;
+}
+
+.dive-sites__modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.dive-sites__modal {
+  background: var(--color-2);
+  max-width: 500px;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.leaflet-bottom {
+  z-index: 995 !important;
+}
+
 /* --- Contact Section --- */
 .contact-section {
   padding: 4rem 1rem;

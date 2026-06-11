@@ -16,6 +16,7 @@ L.Icon.Default.mergeOptions({
 function DivingSitesSection({ section }) {
   const [selectedId, setSelectedId] = useState(null);
   const [locked, setLocked] = useState(false);
+  const [expandedText, setExpandedText] = useState(null);
 
   const sites = useMemo(() => {
   if (!section?.blocks) return [];
@@ -186,13 +187,48 @@ function DivingSitesSection({ section }) {
                 </div>
               </div>
 
-              <p className="dive-sites__card-text">
-                {selectedSite.description}
-              </p>
+          <p style={{ whiteSpace: 'pre-line', display: 'block' }} className="dive-sites__card-text">
+  {selectedSite.description
+    ?.replace(/\\n/g, '\n')
+    .slice(0, 180)}
+
+  {selectedSite.description?.length > 180 && (
+    <>
+      ...{' '}
+      <button
+        onClick={() =>
+          setExpandedText(
+            selectedSite.description?.replace(/\\n/g, '\n')
+          )
+        }
+        className="dive-sites__read-more"
+      >
+        read more
+      </button>
+    </>
+  )}
+</p>
             </div>
           </article>
         </div>
       </div>
+      {expandedText && (
+  <div
+    className="dive-sites__modal-overlay"
+    onClick={() => setExpandedText(null)}
+  >
+    <div
+      className="dive-sites__modal"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <p>{expandedText}</p>
+
+      <button onClick={() => setExpandedText(null)}>
+        Close
+      </button>
+    </div>
+  </div>
+)}
     </section>
   );
 }
