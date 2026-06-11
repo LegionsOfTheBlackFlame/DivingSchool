@@ -18,25 +18,30 @@ function DivingSitesSection({ section }) {
   const [locked, setLocked] = useState(false);
 
   const sites = useMemo(() => {
-    if (!section?.blocks) return [];
+  if (!section?.blocks) return [];
 
-    const listBlock = section.blocks.find(
-      b => b.block_type === 'list'
-    );
+  const listBlock = section.blocks.find(
+    b => b.block_type === 'list'
+  );
 
-    return (
-      listBlock?.dive_sites?.map(site => ({
+  return (
+    listBlock?.dive_sites?.map(site => {
+      const isVideo = site.image?.toLowerCase().includes('.mp4');
+
+      return {
         id: site.id,
         title: site.name,
         description: site.description,
-        image:
-          site.image ||
-          'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80',
+        media: {
+          type: isVideo ? 'video' : 'image',
+          src: site.image,
+        },
         lat: site.lat ?? 36.20,
         lng: site.lng ?? 29.60,
-      })) ?? []
-    );
-  }, [section]);
+      };
+    }) ?? []
+  );
+}, [section]);
 
   useEffect(() => {
     if (sites.length && !selectedId) {
@@ -144,11 +149,22 @@ function DivingSitesSection({ section }) {
 
           <article className="dive-sites__card">
             <div className="dive-sites__card-image-wrap">
-              <img
-                src={selectedSite.image}
-                alt={selectedSite.title}
-                className="dive-sites__card-image"
-              />
+             {selectedSite.media?.type === 'video' ? (
+  <video
+    src={selectedSite.media.src}
+    className="dive-sites__card-image"
+    autoPlay
+    muted
+    loop
+    playsInline
+  />
+) : (
+  <img
+    src={selectedSite.media?.src}
+    alt={selectedSite.title}
+    className="dive-sites__card-image"
+  />
+)}
 
               <div className="dive-sites__card-image-overlay" />
             </div>
