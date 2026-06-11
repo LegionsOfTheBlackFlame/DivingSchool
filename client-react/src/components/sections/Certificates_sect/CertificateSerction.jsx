@@ -76,8 +76,8 @@ export default function Certificates({ section }) {
                   {cert.courses
                     ?.sort((a, b) => a.order_index - b.order_index)
                     .map(course => (
-                      <li key={course.id || course.name}>
-                        {course.name}
+                      <li key={course.id || course.text}>
+                        {course.text}
                       </li>
                     ))}
                 </ul>
