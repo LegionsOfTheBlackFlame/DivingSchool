@@ -1,9 +1,7 @@
 import HeroImage from '../../../assets/hero-image.jpg'
 import React from 'react'
 export default function HeroSection({ section }) {
-  const handleCta = () => {
-    console.log('CTA button clicked!');
-  }
+
   const textBlocks = section.blocks.filter(
   b =>
     b.block_type === 'title' ||
@@ -14,6 +12,18 @@ export default function HeroSection({ section }) {
   const imageBlocks = section.blocks.filter(
     b => b.block_type === 'image'
   )
+  const handleCta = () => {
+  const phone = '905333221082'
+  const message = encodeURIComponent(
+    'Hello, I would like to know more about your diving courses.'
+  )
+
+  window.open(
+    `https://wa.me/${phone}?text=${message}`,
+    '_blank',
+    'noopener,noreferrer'
+  )
+}
 
   return (
     <section className="hero-section">
@@ -39,13 +49,13 @@ export default function HeroSection({ section }) {
 
     if (block.block_type === 'cta') {
       return (
-        <button
-          key={block.id}
-          className="cta-button"
-          onClick={handleCta}
-        >
-          {block.content}
-        </button>
+       <button
+  key={block.id}
+  className="cta-button"
+  onClick={handleCta}
+>
+  {block.content}
+</button>
       )
     }
 
