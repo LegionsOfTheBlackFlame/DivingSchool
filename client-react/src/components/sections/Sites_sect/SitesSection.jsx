@@ -230,11 +230,12 @@ function DivingSitesSection({ section }) {
       className="dive-sites__modal"
       onClick={(e) => e.stopPropagation()}
     >
+       <button onClick={() => setExpandedText(null)}>
+        X
+      </button>
       <p>{expandedText}</p>
 
-      <button onClick={() => setExpandedText(null)}>
-        Close
-      </button>
+     
     </div>
   </div>
 )}
