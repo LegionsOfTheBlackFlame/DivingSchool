@@ -12,6 +12,12 @@ L.Icon.Default.mergeOptions({
   iconUrl: markerIcon,
   shadowUrl: markerShadow,
 });
+const officeIcon = L.icon({
+  iconUrl:'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+ shadowUrl:
+    'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],})
 
 function DivingSitesSection({ section }) {
   const [selectedId, setSelectedId] = useState(null);
@@ -135,7 +141,10 @@ function DivingSitesSection({ section }) {
                 attribution="&copy; OpenStreetMap"
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-
+<Marker
+    position={[36.83492825944246, 30.60686843453962]}
+    icon={officeIcon}
+  />
               {sites.map(site => (
                 <Marker
                   key={site.id}
