@@ -901,7 +901,7 @@ a.contact-section__value:hover {
 .announcement-section {
 display: flex;
   position: fixed;
-  z-index: 1000;
+  z-index: 998;
   right: 1em;
   bottom: 3.2em;
   background-color: #010c1bc0;
@@ -1019,8 +1019,11 @@ display: none;
 
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.625rem;
 
+  height: 80px;
+  width: 200px;
   padding: 0.875rem 1.1rem;
   border-radius: 999px;
   background: #25d366;
@@ -1049,11 +1052,12 @@ display: none;
   justify-content: center;
   width: 1.25rem;
   height: 1.25rem;
-  font-size: 1rem;
+  font-size: 2rem;
 }
 
 .whatsapp-button__text {
   white-space: nowrap;
+  font-size: 1.2em;
 }
 
 @media (max-width: 768px) {

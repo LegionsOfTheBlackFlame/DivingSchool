@@ -59,8 +59,6 @@ console.log('PAGE RENDER:', page)
         <SectionGate key={section.id} section={section} />
         
       ))}
- 
-{/* <ElfsightWidget /> */}
 
     </>
   )
