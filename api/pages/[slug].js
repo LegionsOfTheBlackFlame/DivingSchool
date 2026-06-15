@@ -1,12 +1,6 @@
-import { pages } from "../../data/pages.js";
+import express from "express";
+import app from "../../server/app.js";
 
 export default function handler(req, res) {
-  const { slug } = req.query;
-  const page = pages[slug];
-
-  if (!page) {
-    return res.status(404).json({ error: "Page not found" });
-  }
-
-  return res.status(200).json(page);
+  return app(req, res);
 }

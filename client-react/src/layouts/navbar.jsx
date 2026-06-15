@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import LanguageSwitcher from "./languageswitch";
+import LanguageSwitcher from "./LanguageSwitch";
+import logo from '../assets/logo.png';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -20,21 +21,9 @@ export default function Navbar() {
   return (
  <nav className={`navbar ${isScrolled ? 'navbar--scrolled' : ''}`}>
   <div >
-    <h1 className='brand-logo'>DiveSchool</h1>
-       <button
-        className="hamburger"
-        aria-label="Toggle menu"
-        aria-expanded={open}
-        onClick={() => setOpen(o => !o)}
-      >
-        ☰
-      </button>
-    <ul className={`nav-links ${open ? "open" : ""}`}>
-      <li><a href="/">Home</a></li>
-      <li><a href="/about">About</a></li>
-    </ul>
-     <LanguageSwitcher
-  />
+    <h1 className='brand-logo'>Bilyaz Diving Center</h1>
+<img src={logo} alt="Logo" className="navlogo nav-center" />
+     <LanguageSwitcher className="nav-right" />
   </div>
 </nav>
   )

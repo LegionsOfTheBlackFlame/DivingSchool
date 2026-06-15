@@ -27,6 +27,11 @@ todo:
 -remove duplicate default section
 -Init Dives database table
 
+36°53'01.7"N 30°42'01.5"E st.didier wreck
+36°52'59.7"N 30°40'56.7"E cave
+36°53'03.7"N 30°41'50.7"E falezler
+36°52'54.0"N 30°40'41.5"E
+
 
 
 

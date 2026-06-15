@@ -1,43 +1,64 @@
 import { useEffect, useState } from 'react'
 import { fetchJson } from '../../lib/fetchJSON.js'
 import SectionGate from '../components/SectionGate.jsx'
+import { useLanguage } from '../layouts/LanguageContext.jsx'
 import ElfsightWidget from "../components/sections/Reviews_sect/reviews.jsx";
 
 export default function HomePage() {
   const [page, setPage] = useState(null)
   const [error, setError] = useState(null)
+  const { lang } = useLanguage()
 
   useEffect(() => {
-    let cancelled = false
-    console.log(page);
+  console.log('LANG CHANGED:', lang)
+}, [lang])
+useEffect(() => {
+  let cancelled = false
 
-    async function load() {
-      try {
-        const data = await fetchJson('/api/pages/home')
-        if (!cancelled) setPage(data)
-      } catch (err) {
-        if (!cancelled) setError(err)
-      }
-    }
+  async function load() {
+    console.log('REQUEST URL:', `/api/pages/home?lang=${lang}`)
+    setError(null)
+    const data = await fetchJson(`/api/pages/home?lang=${lang}`)
+    console.log(
+  'FIRST HERO TITLE:',
+  data.sections
+    ?.find(s => s.section_key === 'hero')
+    ?.blocks?.find(b => b.block_type === 'title')
+    ?.content
+)
 
-    load()
-    return () => { cancelled = true; setPage(null)}
-  }, [])
+console.log(
+  'FIRST HERO TEXT:',
+  data.sections
+    ?.find(s => s.section_key === 'hero')
+    ?.blocks?.find(b => b.block_type === 'text')
+    ?.content
+)
+    if (!cancelled) setPage(data)
+      console.log('NEW PAGE REF:', data)
+  }
+
+
+  load()
+console.log('PAGE RENDER:', page)
+
+  return () => {
+    cancelled = true
+  }
+}, [lang])
 
   if (error) {
     return <pre style={{ color: 'crimson' }}>{error.message}</pre>
   }
 
   if (!page) return <p>Loading…</p>
-  console.log(page);
+  console.log("second page render:", page);
   return (
     <>
       {page.sections.map(section => (
         <SectionGate key={section.id} section={section} />
         
       ))}
- 
-{/* <ElfsightWidget /> */}
 
     </>
   )

@@ -4,6 +4,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 import pagesRouter from "./routes/pages.routes.js";
+import diveSitesRouter from "./routes/diveSites.routes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,6 +25,7 @@ app.get(["/", "/home", "/booking"], (req, res) => {
 });
 
 app.use("/api/pages", pagesRouter);
+app.use("/api/dive-sites", diveSitesRouter);
 
 app.get(/\/(?!api).*/, (req, res) => {
   res.sendFile(path.join(__dirname, "../client-react/index.html"));

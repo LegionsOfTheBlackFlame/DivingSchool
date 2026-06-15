@@ -1,7 +1,7 @@
-import { getPageFromMock } from './getPageFromMock.js'
-// import { getPageFromDb } from './getPageFromDb.js'
+// import { getPageFromMock } from './getPageFromMock.js'
+import { getPageFromDb } from './getPageFromDb.js'
 
-export async function getPage(slug) {
-  return getPageFromMock(slug)
-//   return getPageFromDb(slug)
+export async function getPage(slug, lang = 'en') {
+  // return getPageFromMock(slug, lang);
+  return getPageFromDb(slug,lang);
 }
